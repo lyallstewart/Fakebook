@@ -1,12 +1,20 @@
 import React from 'react';
-var __html = require('./homepage.html');
-var template = { __html: __html };
+import './index.css'
 
-
-class App extends React.Component {
+class HomePage extends React.Component {
   render() {
-    return <div dangerouslySetInnerHTML={template} />
+    return (
+      <div>
+        <nav>
+          <ul>
+            <li><img id="logo" src="https://i.ytimg.com/vi/oHg5SJYRHA0/hqdefault.jpg" /></li>
+            
+            <li><button id="MenuBar">Menu</button></li>
+          </ul>
+        </nav>
+      </div>
+    )
   }
 }
 
-export default App;
+export default HomePage;
