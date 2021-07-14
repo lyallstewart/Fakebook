@@ -42,5 +42,14 @@ function getPostData(postId) {
           videoType:"mp4"
         }
     }
+    else if (postId==="6") {
+        return {
+          type:"video",
+          content:"This is an amazing video!",
+          mediaLink:"BNcxTNrtRdk",
+          videoType:"youtube"
+        }
+    }
+    
 }
 export default getPostData
