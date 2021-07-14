@@ -1,12 +1,14 @@
 nav {
   background-color: blue;
   padding: 0px;
+  height: 75px;
 }
 
 img {
   height: 50px;
   width: 50px;
-  vertical-align: middle
+  vertical-align: middle;
+  border-radius: 100%;
 
 }
 
@@ -14,16 +16,16 @@ body {
   margin:0;
   padding:0;
   overflow:none !important;
+  background-color: lightblue;
 }
+
 li, p {
   display: inline;
 }
 
-* {
-  background-color: lightblue;
-}
 
 li:nth-child(2) {
   position: absolute;
   right:0;
+  padding-right: 40px;
 }
