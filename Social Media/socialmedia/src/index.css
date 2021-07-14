@@ -1,7 +1,13 @@
+:root {
+  --navbar-height: 75px;
+}
+* {
+  margin:0;
+}
 nav {
   background-color: blue;
   padding: 0px;
-  height: 75px;
+  height: var(--navbar-height);
 }
 
 img {
@@ -15,7 +21,7 @@ img {
 body {
   margin:0;
   padding:0;
-  overflow:none !important;
+  /*overflow:hidden !important;*/
   background-color: lightblue;
 }
 
@@ -28,4 +34,24 @@ li:nth-child(2) {
   position: absolute;
   right:0;
   padding-right: 40px;
+}
+
+.flex-container {
+  display: flex;
+  height: calc(100vh - var(--navbar-height));
+}
+
+.flex-item {
+  flex: 1;
+  height: 100%;
+}  
+.verticalItem {
+  max-width: 15vw;
+  background-color: red;
+}
+.verticalSpacer {
+  max-width: 5vw;
+}
+#posts {
+  max-width: 60vw;
 }
