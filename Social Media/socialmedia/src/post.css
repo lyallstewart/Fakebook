@@ -1,0 +1,28 @@
+.post-container {
+    background-color: blueviolet;
+    margin: 10px;
+    margin-top:30px;
+}
+.video-container {
+	position:relative;
+	height:20vh;
+    width:calc(320vh/9);
+	overflow:hidden;
+    max-height: 20vh;
+}
+
+.video-container iframe, .video-container object, .video-container embed {
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
+.post-media {
+    border-radius: 0%;
+    max-height: 20vh;
+    object-fit: contain;
+    display: block;
+    height: auto;
+    width:auto;
+}

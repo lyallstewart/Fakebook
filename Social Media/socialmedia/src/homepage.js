@@ -1,5 +1,6 @@
 import React from 'react';
-import './index.css'
+import './index.css';
+import Post from "./post.js";
 
 class HomePage extends React.Component {
   render() {
@@ -15,7 +16,13 @@ class HomePage extends React.Component {
         <div className="flex-container">
         <div className="flex-item verticalItem" id="friends"></div>
         <div className="flex-item verticalSpacer"></div>
-        <div className="flex-item verticalItem" id="posts"></div>
+        <div className="flex-item verticalItem" id="posts">
+          <Post id="1"/><Post id="1"/>{/*These are only to demonstrate the post components*/}
+          <Post id="2"/><Post id="2"/>{/*until the postpage is ready.*/}
+          <Post id="3"/><Post id="3"/>
+          <Post id="4"/><Post id="4"/>
+          <Post id="5"/><Post id="5"/>
+          </div>
         <div className="flex-item verticalSpacer"></div>
         <div className="flex-item verticalItem" id="SuggestedFriends"></div>
         </div>
