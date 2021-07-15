@@ -2,16 +2,17 @@ import React, { Component } from 'react'
 import './nav.css';
 import './index.css'
 
-
-
-class Navbar extends Component {
+export class Navbar extends Component {
     render() {
         return (
             <div className="navbar">
-                <a href="./profile" className="active"> <img src="https://i.ytimg.com/vi/oHg5SJYRHA0/hqdefault.jpg" alt="a"/></a>
-                <a href="./#news">New Post</a>
-                <a href="./">Posts</a>
-                <a href="./#about">Friends</a>
+                <nav>
+                    <ul>
+                        <li key="profilePic"><img id="logo" src="https://i.ytimg.com/vi/oHg5SJYRHA0/hqdefault.jpg" alt="A profile"/></li>
+                        
+                        <li><button key="menuButton" id="MenuBar">Menu</button></li>
+                    </ul>
+                </nav>
             </div>
         )
     }
