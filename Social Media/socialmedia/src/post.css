@@ -4,8 +4,10 @@
     --post-height:min(var(--post-height-pt-one),var(--post-height-pt-two))
 }
 .post-container {
+    background-color: white;
     margin: 10px;
     margin-top:30px;
+    border: darkgray solid 1px;
 }
 .video-container {
 	position:relative;
@@ -33,15 +35,4 @@
 
 * {
     font-family: 'Noto Sans JP', sans-serif !important;
-
   }
-
-.postHeader {
-    padding: 10px;
-    text-align: center;
-}
-
-.post-container {
-    border-bottom: 3px darkgrey solid;
-    padding-bottom: 5px;
-}
