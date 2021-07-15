@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import getPostsToDisplay from './getPostsToDisplay';
 import Post from './post';
+import "./app.css";
 
 class PostArea extends Component {
     render() {
