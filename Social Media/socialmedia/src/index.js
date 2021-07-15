@@ -10,12 +10,15 @@ ReactDOM.render(
   <React.StrictMode>
     <Navbar />
     <BrowserRouter>
-    
-    <HomePage />
+      <Switch>
+        <Route exact path="/"><HomePage /></Route>
+        <Route path="/profile"><h1>Profile</h1></Route>
+      </Switch>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
-
+ 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
