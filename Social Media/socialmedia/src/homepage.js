@@ -1,5 +1,6 @@
 import React from 'react';
-import './index.css';
+import './css/index.css';
+import Post from "./post.js";
 import PostArea from './postArea.js';
 
 class HomePage extends React.Component {

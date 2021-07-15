@@ -14,3 +14,7 @@ nav {
     padding: 0px;
     height: var(--navbar-height);
 }
+
+button {
+    width: 100%;
+}
