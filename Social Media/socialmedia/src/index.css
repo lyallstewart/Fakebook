@@ -4,11 +4,6 @@
 * {
   margin:0;
 }
-nav {
-  background-color: blue;
-  padding: 0px;
-  height: var(--navbar-height);
-}
 
 img {
   height: 50px;
@@ -47,7 +42,7 @@ li:nth-child(2) {
 }  
 .verticalItem {
   max-width: 15vw;
-  background-color: red;
+  background-color: grey;
 }
 .verticalSpacer {
   max-width: 5vw;

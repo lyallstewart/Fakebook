@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+* {
+  font-family: 'Noto Sans JP', sans-serif !important;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -19,8 +23,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: center 2vmin;
   color: white;
 }
 
@@ -36,3 +39,21 @@
     transform: rotate(360deg);
   }
 }
+
+/*
+nav {
+  height: 50px;
+  position: relative;
+  border: 3px solid lightgray;
+  color: blue
+}
+
+ul nav li {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+*/
