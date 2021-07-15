@@ -8,6 +8,9 @@ nav {
   background-color: blue;
   padding: 0px;
   height: var(--navbar-height);
+  position:sticky;
+  top:0;
+  z-index: 1;
 }
 
 img {
