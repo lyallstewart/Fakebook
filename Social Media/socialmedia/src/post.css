@@ -1,3 +1,8 @@
+:root {
+    --post-height-pt-one:min(300px,calc( 100vh - var(--navbar-height)));
+    --post-height-pt-two:calc(calc(50vw / 16) * 9);
+    --post-height:min(var(--post-height-pt-one),var(--post-height-pt-two))
+}
 .post-container {
     background-color: white;
     margin: 10px;
@@ -6,10 +11,10 @@
 }
 .video-container {
 	position:relative;
-	height:20vh;
-    width:calc(320vh/9);
+	height:var(--post-height);
+    width:calc(calc(var(--post-height) * 16)/9);
 	overflow:hidden;
-    max-height: 20vh;
+    max-height: var(--post-height);
 }
 
 .video-container iframe, .video-container object, .video-container embed {
@@ -21,7 +26,7 @@
 }
 .post-media {
     border-radius: 0%;
-    max-height: 20vh;
+    max-height: var(--post-height);
     object-fit: contain;
     display: block;
     height: auto;

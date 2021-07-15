@@ -12,7 +12,7 @@ class Post extends Component {
                 return <img className="post-media" src={mediaLink} alt="an amazing pic"/>
             case "video":
                 if (videotype==="youtube") {
-                    return <div className="video-container"><iframe title={"Youtube embedded video. id="+mediaLink} src={"https://www.youtube.com/embed/"+mediaLink} frameborder="0" allowfullscreen></iframe></div>
+                    return <div className="video-container"><iframe title={"Youtube embedded video. id="+mediaLink} src={"https://www.youtube.com/embed/"+mediaLink} frameBorder="0" allowFullScreen></iframe></div>
                 } else {
                     return <div className="video-container"><video controls className="post-media"><source src={mediaLink} type={"video/"+videotype} /></video></div>
                 }

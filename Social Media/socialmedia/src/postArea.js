@@ -5,7 +5,6 @@ import "./App.css";
 
 class PostArea extends Component {
     render() {
-        console.log("test")
         let postsToDisplay=getPostsToDisplay()
         return (
             <>
