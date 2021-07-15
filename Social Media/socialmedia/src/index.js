@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import "./App.css";
 import HomePage from './homepage';
+import Navbar from "./navbar";
 
 ReactDOM.render(
   <React.StrictMode>

@@ -4,10 +4,9 @@
     --post-height:min(var(--post-height-pt-one),var(--post-height-pt-two))
 }
 .post-container {
-    background-color: white;
+    background-color: grey;
     margin: 10px;
     margin-top:30px;
-    border: darkgray solid 1px;
 }
 .video-container {
 	position:relative;

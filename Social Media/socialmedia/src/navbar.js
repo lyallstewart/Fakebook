@@ -2,17 +2,20 @@ import React, { Component } from 'react'
 import './nav.css';
 import './index.css'
 
-export class Navbar extends Component {
+class Navbar extends Component {
+    constructor() {
+        this.profileClicked=this.profileClicked.bind(this)
+    }
+    profileClicked() {
+        
+    }
     render() {
         return (
             <div className="navbar">
-                <nav>
-                    <ul>
-                        <li key="profilePic"><img id="logo" src="https://i.ytimg.com/vi/oHg5SJYRHA0/hqdefault.jpg" alt="A profile"/></li>
-                        
-                        <li><button key="menuButton" id="MenuBar">Menu</button></li>
-                    </ul>
-                </nav>
+                <a href="#home" class="active" onClick={this.profileClicked}> <img src="https://i.ytimg.com/vi/oHg5SJYRHA0/hqdefault.jpg" alt="a"/></a>
+                <a href="#news">News</a>
+                <a href="#contact">Contact</a>
+                <a href="#about">About</a>
             </div>
         )
     }
