@@ -1,22 +1,22 @@
 :root {
-  --navbar-height: 75px;
+  --navbar-height: 56px;
+  --profile-picture-size: 30px;
 }
 * {
   margin:0;
+  position:relative;
+  padding:0;
 }
 nav {
   background-color: blue;
   padding: 0px;
   height: var(--navbar-height);
-  position:sticky;
-  top:0;
-  z-index: 1;
+
 }
 
 img {
   height: 50px;
   width: 50px;
-  vertical-align: middle;
   border-radius: 100%;
 
 }
@@ -25,7 +25,7 @@ body {
   margin:0;
   padding:0;
   /*overflow:hidden !important;*/
-  background-color: lightblue;
+  background-color: lightgray;
 }
 
 li, p {
@@ -46,8 +46,9 @@ li:nth-child(2) {
 
 .flex-item {
   flex: 1;
-  height: 100%;
-}  
+  height: fit-content;
+}
+  
 .verticalItem {
   max-width: 15vw;
   background-color: grey;
@@ -55,7 +56,9 @@ li:nth-child(2) {
 .verticalSpacer {
   max-width: 5vw;
 }
+
 #posts {
   max-width: 60vw;
-  overflow-y: scroll;
+  height:fit-content;
+  overflow-y: visible;
 }
