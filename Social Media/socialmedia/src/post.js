@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import getPostData from "./getPostData";
-import "./css/post.css";
-import "./css/App.css";
+import "./post.css";
+import "./App.css";
 
 class Post extends Component {
     renderSwitch(tocheck,videotype,mediaLink) {
