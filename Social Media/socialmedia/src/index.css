@@ -14,7 +14,7 @@ nav {
 
 }
 
-img {
+#logo {
   height: 50px;
   width: 50px;
   border-radius: 100%;
@@ -42,11 +42,19 @@ li:nth-child(2) {
 .flex-container {
   display: flex;
   height: calc(100vh - var(--navbar-height));
+  padding: 2px;
+  padding-top: 0 !important;
 }
 
 .flex-item {
   flex: 1;
   height: fit-content;
+  padding: 2px;
+}
+
+.friendsItemLeft, .friendsItemRight {
+  width: fit-content;
+  max-width: 20vw;
 }
   
 .verticalItem {
@@ -62,3 +70,4 @@ li:nth-child(2) {
   height:fit-content;
   overflow-y: visible;
 }
+

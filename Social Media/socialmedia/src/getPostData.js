@@ -3,12 +3,12 @@
 //
 function getPostData(postId) {
     if (postId==="1") {
-  return {
-      type:"text",
-      content:"This is an amazing post!",
-      mediaLink:"",
-      videoType:null
-        }
+      return {
+        type:"text",
+        content:"This is an amazing post!",
+        mediaLink:"",
+        videoType:null
+      }
     } 
     else if (postId==="2") {
         return {
