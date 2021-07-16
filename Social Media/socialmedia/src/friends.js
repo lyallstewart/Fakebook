@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import "./post.css";
 import "./App.css";
+import "./friends.css";
 import getApiData from './getApiData';
 
 

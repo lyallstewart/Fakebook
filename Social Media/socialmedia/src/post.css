@@ -1,8 +1,3 @@
-:root {
-    --post-height-pt-one:min(300px,calc( 100vh - var(--navbar-height)));
-    --post-height-pt-two:calc(calc(50vw / 16) * 9);
-    --post-height:min(var(--post-height-pt-one),var(--post-height-pt-two))
-}
 .post-container {
     margin: 10px;
     margin-top:30px;
