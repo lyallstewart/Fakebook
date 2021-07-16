@@ -1,6 +1,6 @@
-//NOTE: THIS WHOLE FILE IS A PLACEHOLDER
-//THIS FILE NEEDS TO GET DATA FROM A POST GIVEN IT'S ID
-//
+// Returns post from their ID 
+// TEMP FILE UNTIL DB INTERGRATION.
+
 function getPostData(postId) {
     if (postId==="1") {
       return {

@@ -1,6 +1,5 @@
-//NOTE: THIS WHOLE FILE IS A PLACEHOLDER
-//THIS FILE NEEDS TO GET DATA FROM A POST GIVEN IT'S ID
-//
+// Returns user from their ID 
+// TEMP FILE UNTIL DB INTERGRATION.
 
 function getFriendData(friendId) {
   console.log(friendId,typeof friendId)
