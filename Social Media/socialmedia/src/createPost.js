@@ -20,18 +20,15 @@ export class CreatePost extends Component {
         this.setState({displayText:true});
         this.setState({toDisplay: this.state.content})
         
-        
-        return false
     }
     render() {
         return (
             <div>
                 <h1>Create Post:</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <input type="text" value={this.state.content||""} onChange={this.handleChange} />
-                    <button onClick={this.handleSubmit} e="submit" value="Submit Post" >Submit</button>
-                </form>
-                <p>{this.state.displayText?this.state.toDisplay:""}</p>
+                    <textarea name="Content" cols="40" rows="5"  value={this.state.content||""} onChange={this.handleChange} ></textarea>
+                    <button onClick={this.handleSubmit}>Submit</button>
+                <p>{this.state.displayText?this.state.content:""}</p>
+                
             </div>
         )
     }
