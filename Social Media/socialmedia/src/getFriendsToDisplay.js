@@ -1,5 +1,7 @@
+import getApiData from "./getApiData";
+
 function getFriendsToDisplay() {
-    return ["1","2","3","4","5"]
+    return getApiData("friendsToDisplay")
 }
 
 export default getFriendsToDisplay;
