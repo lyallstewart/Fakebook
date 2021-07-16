@@ -3,9 +3,10 @@ const getFriendsToDisplay = require("./getFriendsToDisplay.js")
 const getPostData = require("./getPostData.js")
 const getPostsToDisplay = require("./getPostsToDisplay.js")
 const express = require('express')
+var cors = require('cors');
 const app = express()
 const port = 3001
-
+app.use(cors());
 app.get("/friend/:id",(req, res) => {
   console.log(req.params.id)
     res.send(getFriendData(req.params.id))

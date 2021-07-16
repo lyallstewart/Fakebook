@@ -1,15 +1,22 @@
 import React from 'react';
-import getFriendsToDisplay from './getFriendsToDisplay.js';
 import './index.css';
 import PostArea from './postArea.js';
 import Friend from "./friends.js";
+import getApiData from './getApiData';
 
 class FriendsList extends React.Component {
+  constructor() {
+    super()
+    this.state={friends:[]}
+}
+componentDidMount() {
+    getApiData("friendsToDisplay").then(json => this.setState({friends:json}));
+}
   render() {
     return (
       <div>
         <h2>Friends:</h2>
-        {getFriendsToDisplay().map(id=><Friend id={id} />)}
+        {this.state.friends.map(id=><Friend id={id} />)}
       </div>
     );
   }

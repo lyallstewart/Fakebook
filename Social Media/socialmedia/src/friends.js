@@ -1,18 +1,23 @@
 import React, { Component } from 'react'
 import "./post.css";
 import "./App.css";
-import getFriendData from './getFriendData';
-
+import getApiData from './getApiData';
 
 
 class Friend extends Component {
+    constructor() {
+        super()
+        this.state={fullName:"",profilePicture:""}
+    }
+    componentDidMount() {
+        getApiData("friend/"+this.props.id).then(json => this.setState({ fullName:json.fullName, profilePicture:json.profilePicture}));
+    }
     render() {
-        let data = getFriendData(this.props.id)
         return (
             
             <div className="friend-container">
-                    <img className="profilePicture" src={data.profilePicture} alt="an amazing pic"/>
-                    <p className="friendName">{data.fullName}</p>
+                    <img className="profilePicture" src={this.state.profilePicture} alt="an amazing pic"/>
+                    <p className="friendName">{this.state.fullName}</p>
             </div>
         )
     }
