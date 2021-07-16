@@ -26,4 +26,4 @@ class Friend extends Component {
 
 export default Friend;
 //export getFriendData;
-//export getFriendsToDisplay;
+//export getFriendsToDisplay; 

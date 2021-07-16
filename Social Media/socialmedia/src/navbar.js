@@ -9,7 +9,7 @@ class Navbar extends Component {
         return (
             <div className="navbar">
                 <a href="./profile" className="active"> <img id="logo" src="https://i.ytimg.com/vi/oHg5SJYRHA0/hqdefault.jpg" alt="a"/></a>
-                <a href="./#news">New Post</a>
+                <a href="./post">New Post</a>
                 <a href="./">Posts</a>
                 <a href="./#about">Friends</a>
             </div>
