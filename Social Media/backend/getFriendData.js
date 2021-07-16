@@ -3,6 +3,7 @@
 //
 
 function getFriendData(friendId) {
+  console.log(friendId,typeof friendId)
     if (friendId==="1") {
       return {
         fullName:"George Kattenbelt",

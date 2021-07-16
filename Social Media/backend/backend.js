@@ -5,26 +5,19 @@ const getPostsToDisplay = require("./getPostsToDisplay.js")
 const express = require('express')
 const app = express()
 const port = 3001
-app.use(express.json()) // decodes JSON
 
-app.get("*",(req, res) => {
-    res.end("FakeBook API")
+app.get("/friend/:id",(req, res) => {
+  console.log(req.params.id)
+    res.send(getFriendData(req.params.id))
 })
-
-app.post('*', (req, res) => {
-  data = req.body // gets the JSON request
-  url = req.url
-  let tosend
-  if (url==="/friend") {
-      tosend = getFriendData(data.id)
-  } else if (url==="/friendsToDisplay") {
-      tosend = getFriendsToDisplay()
-  } else if (url==="/post") {
-    tosend = getPostData(data.id)
-} else if (url==="/postsToDisplay") {
-    tosend = getPostToDisplay()
-}
-  res.end(tosend)
+app.get("/friendsToDisplay",(req, res) => {
+  res.send(getFriendsToDisplay())
+})
+app.get("/post/:id",(req, res) => {
+  res.send(getPostData(req.params.id))
+})
+app.get("/postsToDisplay",(req, res) => {
+    res.send(getPostsToDisplay())
 })
 
 app.listen(port, () => {
