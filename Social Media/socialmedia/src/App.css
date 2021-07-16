@@ -57,3 +57,19 @@ ul nav li {
 }
 
 */
+.friend-container {
+  overflow:hidden;
+}
+
+.friendName {
+  vertical-align: middle;
+  display:inline-block;
+  text-overflow: ellipsis;
+}
+
+.profilePicture {
+ display:inline-block;
+ height: 30px;
+ width: 30px;
+ border-radius: 100%;
+}

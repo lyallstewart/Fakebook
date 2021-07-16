@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import getPostData from "./getPostData";
 import "./post.css";
 import "./App.css";
+import getApiData from './getApiData';
 
 class Post extends Component {
     renderSwitch(tocheck,videotype,mediaLink) {
@@ -20,12 +20,18 @@ class Post extends Component {
                 return <></>
                 }
         }
+    constructor() {
+        super()
+        this.state={type:"",videoType:"",mediaLink:"",content:""}
+    }
+    componentDidMount() {
+        getApiData("post/"+this.props.id).then(json => this.setState({ type: json.type , videoType: json.videoType, mediaLink: json.mediaLink, content: json.content}));
+    }
     render() {
-        let postData=getPostData(this.props.id);//Get data about this post
         return (
             <div className="post-container">
-              {this.renderSwitch(postData.type,postData.videoType,postData.mediaLink)}
-              <p>{postData.content}</p>
+              {this.renderSwitch(this.state.type,this.state.videoType,this.state.mediaLink)}
+              <p>{this.state.content}</p>
             </div>
         )
     }
