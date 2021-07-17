@@ -16,7 +16,7 @@ componentDidMount() {
     return (
       <div>
         <h2>Friends:</h2>
-        {this.state.friends.map(id=><Friend id={id} />)}
+        {this.state.friends.map(id=><Friend id={id} key={id}/>)}
       </div>
     );
   }
