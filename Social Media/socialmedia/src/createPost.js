@@ -2,35 +2,32 @@ import React, { Component } from 'react'
 
 export class CreatePost extends Component {
     constructor(props) {
-        super(props)
-        this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleChange.bind(this)
-        this.state = {
-            content:"Type your amazing post here!",
-            displayText:true,
-            toDisplay: "",
-        }
-    }
+        super(props);
+        this.state = {value: ''};
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+      }
+    
     handleChange(event) {
-        this.setState({content: event.target.value});
+              this.setState({value: event.target.value});  
     }
+
     handleSubmit(event) {
-        //submitting code here!
-        alert(this.state.content)
-        this.setState({displayText:true});
-        this.setState({toDisplay: this.state.content})
-        
-    }
+        alert('A post was submitted: ' + this.state.value);
+        console.log("Post submitted" + this.state.value)
+        event.preventDefault();
+      }
+    
     render() {
         return (
-            <div>
-                <h1>Create Post:</h1>
-                    <textarea name="Content" cols="40" rows="5"  value={this.state.content||""} onChange={this.handleChange} ></textarea>
-                    <button onClick={this.handleSubmit}>Submit</button>
-                <p>{this.state.displayText?this.state.content:""}</p>
-                
-            </div>
-        )
+          <form onSubmit={this.handleSubmit}>
+              <label>
+                Enter post content:
+                <input type="text" value={this.state.value} onChange={this.handleChange} />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+        );
     }
 }
 

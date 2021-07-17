@@ -42,9 +42,11 @@
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
-  host: "127.0.0.1:3306",
-  user: "dbaccess",
-  password: "dbaccess"
+  host: "127.0.0.1",
+  port: "3306",
+  user: "root",
+  password: "everything",//DON'T LOOK HERE
+  database: "fakebook"
 });
 // You saw nothing
 //I saw everything
@@ -53,6 +55,8 @@ var con = mysql.createConnection({
 
 // 
 
-con.connect(function(err) {if (err) throw err;console.log("Connected!");
-    
+con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+    con.query("SELECT * FROM users")
 });
