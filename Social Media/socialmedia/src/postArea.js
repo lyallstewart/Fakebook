@@ -11,7 +11,7 @@ class PostArea extends Component {
     }
     componentDidMount() {
         getApiData("postsToDisplay").then(json => this.setState({posts:json}));
-        
+
     }
     render() {
         return (

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import "./post.css";
 import "./App.css";
+import "./friends.css";
 import getApiData from './getApiData';
 
 
@@ -25,4 +26,4 @@ class Friend extends Component {
 
 export default Friend;
 //export getFriendData;
-//export getFriendsToDisplay;
+//export getFriendsToDisplay; 

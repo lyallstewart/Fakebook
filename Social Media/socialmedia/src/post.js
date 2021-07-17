@@ -29,7 +29,7 @@ class Post extends Component {
     }
     render() {
         return (
-            <div className="post-container">
+            <div className="post-container">    
               {this.renderSwitch(this.state.type,this.state.videoType,this.state.mediaLink)}
               <p>{this.state.content}</p>
             </div>

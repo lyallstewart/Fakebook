@@ -1,6 +1,9 @@
 :root {
   --navbar-height: 56px;
   --profile-picture-size: 30px;
+  --post-height-pt-one:min(300px,calc( 100vh - var(--navbar-height)));
+  --post-height-pt-two:calc(calc(50vw / 16) * 9);
+  --post-height:min(var(--post-height-pt-one),var(--post-height-pt-two))
 }
 * {
   margin:0;
@@ -26,17 +29,6 @@ body {
   padding:0;
   /*overflow:hidden !important;*/
   background-color: lightgray;
-}
-
-li, p {
-  display: inline;
-}
-
-
-li:nth-child(2) {
-  position: absolute;
-  right:0;
-  padding-right: 40px;
 }
 
 .flex-container {
