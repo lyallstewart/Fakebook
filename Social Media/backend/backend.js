@@ -61,8 +61,10 @@ var con = mysql.createConnection({
 
 // Connection establishing:
 
+let targetUserID = 1
 con.connect(function(err) {
-  con.query("SELECT * FROM fakebook.users", function (err, result, fields) {
+  // This is definately not the best way of doing it but it's the only one i can be bothered to implement atm.
+  con.query("SELECT * FROM fakebook.users WHERE userId="+targetUserID+";", function (err, result, fields) {
     console.log(result);
   });
 });
