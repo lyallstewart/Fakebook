@@ -20,7 +20,7 @@ const port = 3001
 
 //allow cross-origin
 app.use(cors());
-
+app.use(express.json());
 
 // MySQL Connection Parameters
 var con = mysql.createConnection({
@@ -63,6 +63,7 @@ app.get("/friendsToDisplay",(req, res) => {
 
 //Handle get requests to /post/<PostId>
 app.get("/post/:id",(req, res) => {
+
   con.connect(function(err) {
     
     con.query(
@@ -84,6 +85,34 @@ app.get("/post/:id",(req, res) => {
 //Handle get requests to /postToDisplay
 app.get("/postsToDisplay",(req, res) => {
     res.send(getPostsToDisplay())
+})
+
+app.post("/login",(req,res) => {
+  console.log(`USERNAME:${req.body.Username},PASSWORD:${req.body.Password}`)
+  con.connect(function(err) {
+    
+    con.query(
+      "SELECT * FROM fakebook.users WHERE username='"+req.body.Username+"' AND password='"+req.body.Password+"';",
+       function (err, result, fields) {
+         if (err) {
+           throw err;
+         }
+         //console.log("result:", result , typeof result);
+         console.log(result[0])
+         if (result[0]===undefined) {
+          res.send({validLogin:false})
+          console.log({validLogin:false})
+          
+         } else {
+          res.send({validLogin:true})
+          console.log({validLogin:true})
+         }
+         
+         
+      }
+    );
+    
+   });
 })
 
 //Start listening on port

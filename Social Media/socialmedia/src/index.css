@@ -6,9 +6,9 @@
   --post-height:min(var(--post-height-pt-one),var(--post-height-pt-two))
 }
 * {
-  margin:0;
+  margin:0px;
   position:relative;
-  padding:0;
+  padding:0px;
 }
 nav {
   background-color: blue;
@@ -25,16 +25,16 @@ nav {
 }
 
 body {
-  margin:0;
-  padding:0;
-  /*overflow:hidden !important;*/
-  background-color: lightgray;
+    margin: 0px;
+    padding: 0px;
+    /*overflow:hidden !important;*/
+    background-color: #d4f7dc;
 }
 
 .flex-container {
   display: flex;
   height: calc(100vh - var(--navbar-height));
-  padding: 2px;
+  padding: 0px;
   padding-top: 0 !important;
 }
 
@@ -48,18 +48,27 @@ body {
   width: fit-content;
   max-width: 20vw;
 }
-  
+
 .verticalItem {
-  max-width: 15vw;
-  background-color: grey;
+    background-color: #B7EFC5;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 .verticalSpacer {
-  max-width: 5vw;
+    max-width: 5vw;
 }
 
 #posts {
-  max-width: 60vw;
-  height:fit-content;
-  overflow-y: visible;
+    max-width: 60vw;
+    height: fit-content;
+    overflow-y: visible;
 }
 
+#Friends, #SFriends {
+    color: #208B3A;
+    font-style: bold;
+}
+#SFriendsList {
+    padding:10px;
+    font-size:10px;
+}

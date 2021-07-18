@@ -15,7 +15,7 @@ componentDidMount() {
   render() {
     return (
       <div>
-        <h2>Friends:</h2>
+        <h2 id="Friends">Friends:</h2>
         {this.state.friends.map(id=><Friend id={id} key={id}/>)}
       </div>
     );
@@ -25,7 +25,10 @@ componentDidMount() {
 class FriendsSuggestions extends React.Component {
   render() {
     return (
-      <h2>Suggested Friends:</h2>
+      <>
+        <h2 id="SFriends">Suggested Friends:</h2>
+        <p id="SFriendsList">(no suggested friends here. Wumpus is sad)</p>
+      </>
     );
   }
 };
@@ -37,14 +40,11 @@ class HomePage extends React.Component {
         <div className="flex-container">
           <div className="flex-item verticalItem friendsItemLeft" id="friends">
             <FriendsList />
+            <FriendsSuggestions />
           </div>
           <div className="flex-item verticalSpacer"></div>
           <div className="flex-item verticalItem" id="posts">
             <PostArea />
-          </div>
-          <div className="flex-item verticalSpacer"></div>
-          <div className="flex-item verticalItem friendsItemRight" id="suggestedFriends">
-            <FriendsSuggestions />
           </div>
       </div>
     </div>

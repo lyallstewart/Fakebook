@@ -25,7 +25,7 @@ class Post extends Component {
         this.state={type:"",videoType:"",mediaLink:"",content:""}
     }
     componentDidMount() {
-        getApiData("post/"+this.props.id).then(json => this.setState({ type: json.type , videoType: json.videoType, mediaLink: json.mediaLink, content: json.content}));
+        getApiData("post/"+this.props.id).then(json => this.setState({ type: json.contentType , videoType: json.videoType, mediaLink: json.mediaSource, content: json.textContent}));
     }
     render() {
         return (

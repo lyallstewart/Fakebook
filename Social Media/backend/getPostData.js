@@ -20,7 +20,7 @@ function getPostData(postId) {
     }
     else if (postId==="3") {
         return {
-          type:"video",
+          borentType:"video",
           content:"This is an amazing video!",
           mediaLink:"dQw4w9WgXcQ",
           videoType:"youtube"
