@@ -15,7 +15,7 @@ componentDidMount() {
   render() {
     return (
       <div>
-        <h2>Friends:</h2>
+        <h2 id="Friends">Friends:</h2>
         {this.state.friends.map(id=><Friend id={id} key={id}/>)}
       </div>
     );
@@ -25,7 +25,7 @@ componentDidMount() {
 class FriendsSuggestions extends React.Component {
   render() {
     return (
-      <h2>Suggested Friends:</h2>
+        <h2 id="SFriends">Suggested Friends:</h2>
     );
   }
 };

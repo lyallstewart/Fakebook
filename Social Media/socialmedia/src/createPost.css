@@ -1,0 +1,10 @@
+* {
+    margin: 0px;
+    position: relative;
+}
+h2{
+    padding:10px;
+}
+#contentbox {
+    padding:20px;
+}

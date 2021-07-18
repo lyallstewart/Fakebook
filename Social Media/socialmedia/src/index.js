@@ -5,6 +5,7 @@ import HomePage from './homepage';
 import Navbar from "./navbar";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import CreatePost from "./createPost.js";
+import LoginPage from "./login.js";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -13,9 +14,8 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/"><HomePage /></Route>
         <Route path="/profile"><h1>Profile</h1></Route>
-        
-        
         <Route path="/post"><CreatePost /></Route>
+        <Route path="/login"><LoginPage /></Route>
       </Switch>
     </BrowserRouter>
   </React.StrictMode>,

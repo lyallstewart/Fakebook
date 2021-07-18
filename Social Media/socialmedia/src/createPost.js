@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import "./createPost.css";
 
 export class CreatePost extends Component {
     constructor(props) {
@@ -20,11 +21,12 @@ export class CreatePost extends Component {
     
     render() {
         return (
-          <form onSubmit={this.handleSubmit}>
-              <label>
-                Enter post content:
-                <input type="text" value={this.state.value} onChange={this.handleChange} />
-            </label>
+            <form onSubmit={this.handleSubmit}>
+                <h2>Enter text content in the box below</h2>
+                  <label id="contentbox">
+                    Enter post content:
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                  </label>
             <input type="submit" value="Submit" />
           </form>
         );

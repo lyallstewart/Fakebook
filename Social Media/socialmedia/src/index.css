@@ -25,10 +25,10 @@ nav {
 }
 
 body {
-  margin:0;
-  padding:0;
-  /*overflow:hidden !important;*/
-  background-color: lightgray;
+    margin: 0;
+    padding: 0;
+    /*overflow:hidden !important;*/
+    background-color: white;
 }
 
 .flex-container {
@@ -51,7 +51,9 @@ body {
   
 .verticalItem {
   max-width: 15vw;
-  background-color: grey;
+  background-color: #B7EFC5;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 .verticalSpacer {
   max-width: 5vw;
@@ -63,3 +65,6 @@ body {
   overflow-y: visible;
 }
 
+#Friends, #SFriends {
+    color: #208B3A;
+}
