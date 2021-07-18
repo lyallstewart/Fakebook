@@ -25,7 +25,8 @@ export class CreatePost extends Component {
                 <h2>Enter text content in the box below</h2>
                   <label id="contentbox">
                     Enter post content:
-                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                  <input type="text" value={this.state.value} onChange={this.handleChange} />
+                    <textarea id="extra" name="extra" rows="3" cols="40"></textarea>
                   </label>
             <input type="submit" value="Submit" />
           </form>
