@@ -63,6 +63,9 @@ app.get("/friendsToDisplay",(req, res) => {
 
 //Handle get requests to /post/<PostId>
 app.get("/post/:id",(req, res) => {
+  console.log(getPostData(req.params.id))
+  res.send(getPostData(req.params.id))
+  return
   con.connect(function(err) {
     
     con.query(
