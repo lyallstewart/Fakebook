@@ -8,17 +8,20 @@ import getApiData from './getApiData';
 class Friend extends Component {
     constructor() {
         super()
-        this.state={surName:"",firstName:"",profilePicture:""}
+        this.state={surName:"",firstName:"",profilePicture:"", username:""}
     }
     componentDidMount() {
-        getApiData("friend/"+this.props.id).then(json => this.setState({ surName:json.surName, firstName:json.firstName, profilePicture:json.profilePictureUrl}));
+        getApiData("friend/"+this.props.id).then(json => this.setState({ surName:json.surName, firstName:json.firstName, profilePicture:json.profilePictureUrl,username:json.username}));
     }
     render() {
         return (
             
             <div className="friend-container">
                     <img className="profilePicture" src={this.state.profilePicture} alt="an amazing pic"/>
-                    <p className="friendName">{this.state.firstName+" "+this.state.surName}</p>
+                    <div className="friendNameContainer">
+                        <p className="friendName">{this.state.firstName+" "+this.state.surName}</p>
+                        <p className="friendUsername">{this.state.username}</p>
+                    </div>
             </div>
         )
     }

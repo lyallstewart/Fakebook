@@ -69,7 +69,7 @@ db.once('open', async function() {//wait for connection connected
 
   //Handle get requests to /friendsToDisplay
   app.get("/friendsToDisplay",(req, res) => {
-    res.send([1, 2])
+    res.send([1, 2, 3, 4, 5])
   })
 
   //Handle get requests to /post/<PostId>
@@ -84,9 +84,14 @@ db.once('open', async function() {//wait for connection connected
       res.send(getPostsToDisplay())
   })
 
-  app.post("/login",(req,res) => {
+  app.post("/login",async (req,res) => {
     console.log(`USERNAME:${req.body.Username},PASSWORD:${req.body.Password}`)
-    
+    user = await Users.findOne({username:req.body.Username,password:req.body.Password})
+    if (user===undefined) {
+      res.send({validLogin:false})
+    } else {
+      res.send({validLogin:true})
+    }
   })
  
  })

@@ -1,16 +1,32 @@
+
 .friend-container {
-    overflow:hidden;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    vertical-align: middle;
   }
   
+.friendNameContainer {
+  display:inline-block;
+  font-size: 18px;
+  max-width: 100%;
+
+}
 .friendName {
     vertical-align: middle;
     display:inline-block;
     text-overflow: ellipsis;
+    max-width: 100%;
+    overflow:hidden; 
 }
   
 .profilePicture {
    display:inline-block;
-   height: 30px;
-   width: 30px;
+   height: 40px;
+   width: 40px;
    border-radius: 100%;
+   padding-right: 5px;
+}
+.friendUsername {
+  font-size: 12;
+  float: middle;
 }

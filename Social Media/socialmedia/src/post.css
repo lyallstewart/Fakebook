@@ -37,7 +37,7 @@
 }
 
 .post-container {
-    border-bottom: 3px;
-    border-bottom-color: #25A244;
-    padding-bottom: 5px;
+    border-bottom: 3px #25A244 solid;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
 }

@@ -11,10 +11,8 @@
   padding:0px;
 }
 nav {
-  background-color: blue;
   padding: 0px;
   height: var(--navbar-height);
-
 }
 
 #logo {
@@ -25,15 +23,13 @@ nav {
 }
 
 body {
-    margin: 0px;
-    padding: 0px;
     /*overflow:hidden !important;*/
     background-color:whitesmoke;
 }
 
 .flex-container {
   display: flex;
-  height: calc(100vh - var(--navbar-height));
+  height: fit-content;
   padding: 0px;
   padding-top: 0 !important;
 }
@@ -65,7 +61,7 @@ body {
 }
 
 #Friends, #SFriends {
-    color: #208B3A;
+    color:black;
     font-style: bold;
 }
 #SFriendsList {
