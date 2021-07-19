@@ -1,5 +1,6 @@
 import React from "react";
-import sendApiData from "./sendApiData.js";
+import sendApiData from "./sendApiData.js"; 
+import './login.css'
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -23,6 +24,9 @@ class LoginPage extends React.Component {
         console.log(success)
         if (success.validLogin) {
           alert("Valid Credentials!")
+          console.log("Calling Callback")
+          this.props.loginCallback({LoggedIn:true})
+          console.log(this.props.loginCallback)
         } else {
           alert("Credentials Invalid :(")
         }
@@ -31,13 +35,16 @@ class LoginPage extends React.Component {
     
     render() {
         return (
-          <form onSubmit={this.handleSubmit}>
-              <label>
-                <input type="text" placeholder="Your Username" value={this.state.Username} onChange={this.handleUsernameChange} />
-                <input type="password" placeholder="Password" value={this.state.Password} onChange={this.handlePasswordChange} />
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
+          <div class="wrapper">
+            <h1>Log In:</h1>
+            <form onSubmit={this.handleSubmit} class="loginBox">
+                <label class="loginForm">
+                  <input id="username" type="text" placeholder="Your Username" value={this.state.Username} onChange={this.handleUsernameChange} />
+                  <input id="password" type="password" placeholder="Password" value={this.state.Password} onChange={this.handlePasswordChange} />
+                  <input id="submit" type="submit" value="Submit" />
+              </label>
+            </form>
+          </div>
         );
     }
 }

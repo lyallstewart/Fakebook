@@ -12,6 +12,7 @@ class Navbar extends Component {
                 <a href="./post">New Post</a>
                 <a href="./">Posts</a>
                 <a href="./#about">Friends</a>
+                <a href="./">{this.props.globals.loggedIn?<>Logged in</>:<>Logged out</>}</a>
             </div>
         )
     }
