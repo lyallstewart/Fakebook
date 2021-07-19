@@ -4,7 +4,7 @@
 //And possibly a machine learning thing eventually.
 
 function getPostsToDisplay() {
-    return ["1","2","3","6","4","5","1","2","3","6","4","5"]
+    return ["1"]
 }
 
 module.exports = getPostsToDisplay;

@@ -11,7 +11,7 @@ class Friend extends Component {
         this.state={surName:"",firstName:"",profilePicture:""}
     }
     componentDidMount() {
-        getApiData("friend/"+this.props.id).then(json => this.setState({ surName:json.surName, firstName:json.firstName, profilePicture:json.profilePictureURL}));
+        getApiData("friend/"+this.props.id).then(json => this.setState({ surName:json.surName, firstName:json.firstName, profilePicture:json.profilePictureUrl}));
     }
     render() {
         return (

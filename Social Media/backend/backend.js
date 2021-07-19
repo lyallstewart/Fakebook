@@ -56,7 +56,6 @@ db.once('open', async function() {//wait for connection connected
   //Define a couple Models
   const Users = mongoose.model('Users', UserSchema);
   const Posts = mongoose.model('Posts', PostSchema);
-  const test = 
 
   app.get("/",(req,res)=>{
     console.log("mainpage!")
@@ -65,9 +64,8 @@ db.once('open', async function() {//wait for connection connected
   //Handle get requests to /friend/<UserId>
   app.get("/friend/:id",async (req, res) => {
     user = await Users.findOne({userId:parseInt(req.params.id)})
-      console.log(`USER ${req.params.id}:`,user)
-      res.send(user)
-    })
+    console.log(`USER ${req.params.id}:`,user)
+      res.send(user)})
 
   //Handle get requests to /friendsToDisplay
   app.get("/friendsToDisplay",(req, res) => {
