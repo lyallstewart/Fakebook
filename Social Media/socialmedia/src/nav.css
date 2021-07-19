@@ -33,7 +33,7 @@ li {
 
   /* Add a black background color to the top navigation */
 .navbar {
-    background-color: #333;
+    background-color: #4CAF50;
     overflow: hidden;
     height: var(--navbar-height);
     position:sticky;
@@ -56,13 +56,13 @@ li {
 
   /* Change the color of links on hover */
 .navbar a:hover {
-    background-color: #ddd;
+    background-color: whitesmoke;
     color: black;
 }
   
   /* Add an active class to highlight the current page */
 .navbar a.active {
-    background-color: lightgray;
+    background-color: #7fd682;
     color: white;
     width:50px;
     height:50px;

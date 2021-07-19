@@ -36,6 +36,7 @@ class LoginPage extends React.Component {
     render() {
         return (
           <div class="wrapper">
+            <h1>Log In:</h1>
             <form onSubmit={this.handleSubmit} class="loginBox">
                 <label class="loginForm">
                   <input id="username" type="text" placeholder="Your Username" value={this.state.Username} onChange={this.handleUsernameChange} />
