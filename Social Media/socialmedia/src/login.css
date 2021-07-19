@@ -1,0 +1,39 @@
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+  input {
+    width: 60%;
+  }
+
+  input[type=text], input[type=password] {
+      height: 20px;
+      border: none;
+      margin: 5px;
+      padding: 5px;
+      border-bottom: green 1px solid;
+      outline: none;
+  }
+
+  input:focus {
+      border: 1px solid green;
+  }
+
+  .wrapper {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  html, body {
+   height: 100%;
+   width: 100%;   
+  }
