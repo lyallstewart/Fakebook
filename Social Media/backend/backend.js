@@ -1,9 +1,10 @@
 //Ummmm
 
 // //Import temp functions
-const getPostData = require("./getPostData.js")
 const getPostsToDisplay = require("./getPostsToDisplay.js")
 //Get mysql
+const AutoIncrementFactory = require('mongoose-sequence');
+
 
 var mongoose = require('mongoose');
 
@@ -31,6 +32,9 @@ mongoose.connect(process.env.fakeBookConnectionString, {useNewUrlParser: true, u
 
 
 const db = mongoose.connection;//Get connection
+
+const AutoIncrement = AutoIncrementFactory(db);
+
 db.on('error', console.error.bind(console, 'connection error:'));//Error
 
   //
@@ -51,7 +55,8 @@ db.once('open', async function() {//wait for connection connected
     textContent: String,
     mediaSource: String
   })
-
+  //Post increment
+  PostSchema.plugin(AutoIncrement, {inc_field: 'postId'});
   //Define a couple Models
   const Users = mongoose.model('Users', UserSchema);
   const Posts = mongoose.model('Posts', PostSchema);
@@ -115,8 +120,25 @@ db.once('open', async function() {//wait for connection connected
       res.send({validLogin:false,error:"Username already taken."})
     }
   })
- })
  
+ app.post("/create",async (req,res) => {
+
+    //Let's create a new user!
+    mediaSource = req.body.mediaSource
+    if (req.body.contentType=="video" && req.body.videoType=="youtube") {
+      mediaSource=mediaSource.slice(mediaSource.length - 11)
+    }
+    newPost = new Posts({
+      contentType: req.body.contentType,
+      videoType: req.body.videoType,
+      textContent: req.body.textContent,
+      mediaSource: mediaSource
+    })
+    newPost.save()
+    res.send({validLogin:true})
+})
+
+})
    //Start listening on port
 app.listen(port, () => {
   //console.log(`Server is listening at http://localhost:${port}`)

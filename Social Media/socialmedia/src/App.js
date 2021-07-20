@@ -7,6 +7,7 @@ import CreatePost from "./createPost.js";
 import LoginPage from "./login.js";
 import history from "./history.js";
 import SignUpPage from './signup';
+import Profile from './profile';
 
 //Here we could add potentially support for storing login details in cookies
 
@@ -27,20 +28,37 @@ class App extends React.Component {
     }
     render(){
         console.log("RENDER APP")
-        return(
-        <>
-        <Navbar globals={this.state}/>
-        <Router history={history}>
-        <Switch>
-            <Route exact path="/"><HomePage globals={this.state}/></Route>
-            <Route path="/profile"><h1>Profile</h1></Route>
-            <Route path="/post"><CreatePost globals={this.state}/></Route>
-            <Route path="/login"><LoginPage globals={this.state} loginCallback={this.changeLoginDetails}/></Route>
-            <Route path="/signup"><SignUpPage globals={this.state} /></Route>
-        </Switch>
-        </Router>
-        </>
-    )}
+        if (this.state.isLoggedIn) {
+            return(
+                <>
+                <Navbar globals={this.state}/>
+                <Router history={history}>
+                <Switch>
+                    <Route exact path="/"><HomePage globals={this.state}/></Route>
+                    <Route path="/profile"><Profile globals={this.state}/></Route>
+                    <Route path="/post"><CreatePost globals={this.state}/></Route>
+                    <Route path="/login"><LoginPage globals={this.state} loginCallback={this.changeLoginDetails}/></Route>
+                    <Route path="/signup"><SignUpPage globals={this.state} /></Route>
+                </Switch>
+                </Router>
+                </>
+            )
+        } else {
+            return(
+                <>
+                <Navbar globals={this.state}/>
+                <Router history={history}>
+                <Switch>
+                    <Route path="/post"><CreatePost globals={this.state}/></Route>
+                    <Route exact path="/"><LoginPage globals={this.state} loginCallback={this.changeLoginDetails}/></Route>
+                    <Route path="/login"><LoginPage globals={this.state} loginCallback={this.changeLoginDetails}/></Route>
+                    <Route path="/signup"><SignUpPage globals={this.state} /></Route>
+                </Switch>
+                </Router>
+                </>
+            )
+        }
+        }
 }
 
 export default App;

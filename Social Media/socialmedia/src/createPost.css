@@ -8,3 +8,34 @@ h2{
 #contentbox {
     padding:20px;
 }
+.radioHolder, #videoType {
+    display: flex;
+}
+
+.radioHolder input, #videoType input {
+    display:none;
+}
+#text:checked ~ .text, #image:checked ~ .image, #video:checked ~ .video, #youtube:checked ~ .youtube, #mp4:checked ~ .mp4 {
+    background-color: green;
+}
+.option {
+    display:inline-block;
+    border: 1px green solid;
+    background-color: white;
+    height:20px;
+    flex: 1 1;
+    margin:5px;
+    padding:5px;
+}
+#createForm {
+    width: 60%;
+    margin:auto;
+}
+
+.textContentInput {
+    width: 100%; 
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
