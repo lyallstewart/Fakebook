@@ -11,7 +11,8 @@ var mongoose = require('mongoose');
 const express = require('express')
 var cors = require('cors');
 
-
+// get crypto (the hashing thing)
+const crypto = require('crypto');
 
 // API Connection:
 //setup app
@@ -39,10 +40,10 @@ db.once('open', async function() {//wait for connection connected
   //Define a couple Schemas
   const UserSchema = mongoose.Schema({
     username:String,
-    password:String,
     profilePictureUrl:String,
     firstName:String,
-    surName:String
+    surName:String,
+    authHash:String
   })
   const PostSchema = mongoose.Schema({
     postId:Number,
@@ -86,8 +87,9 @@ db.once('open', async function() {//wait for connection connected
 
   app.post("/login",async (req,res) => {
     console.log(`USERNAME:${req.body.Username},PASSWORD:${req.body.Password}`)
-    user = await Users.findOne({username:req.body.Username,password:req.body.Password})
-    if (user===undefined) {
+    console.log("HASH:",crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64"))
+    user = await Users.findOne({username:req.body.Username,authHash:crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64")})
+    if (user===undefined||user===null) {
       res.send({validLogin:false})
     } else {
       res.send({validLogin:true,userDetails:user})
@@ -101,10 +103,12 @@ db.once('open', async function() {//wait for connection connected
       //Let's create a new user!
       newUser = new Users({
         username : req.body.Username,
-        password : req.body.Password,
         firstName:req.body.firstName,
         surName  :  req.body.surName,
-        profilePictureUrl:"https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"
+        profilePictureUrl:"https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg",
+        authHash: crypto.createHash("sha256")
+        .update(req.body.Username+req.body.Password)//Concatenate Username to stop all hashes with the same password being the same (in case we add password hints)
+        .digest("base64")
       })
       newUser.save()
       res.send({validLogin:true})
