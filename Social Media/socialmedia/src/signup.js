@@ -1,15 +1,18 @@
-import React from "react";
-import sendApiData from "./sendApiData.js"; 
-import './login.css'
-import FakeBookLink from "./fakeBookLink.js";
+import React, { Component } from 'react'
+import sendApiData from './sendApiData';
+import FakeBookLink from './fakeBookLink';
+import "./signup.css";
 
-class LoginPage extends React.Component {
+export class SignUpPage extends Component {
     constructor(props) {
         super(props);
         this.state = {Username: '',
-        Password:""};
+        Password:"",Password2:""};
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handlePassword2Change = this.handlePassword2Change.bind(this);
+        this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
+        this.handleSurNameChange = this.handleSurNameChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
       }
     
@@ -18,10 +21,19 @@ class LoginPage extends React.Component {
     }
     handlePasswordChange(event) {
         this.setState({Password: event.target.value});  
-}
+    }
+    handlePassword2Change(event) {
+        this.setState({Password2: event.target.value});  
+    }
+    handleSurNameChange(event) {
+        this.setState({surName: event.target.value});  
+    }
+    handleFirstNameChange(event) {
+        this.setState({firstName: event.target.value});  
+    }
     async handleSubmit(event) {
       event.preventDefault();
-        let success = await sendApiData("login",this.state)
+        let success = await sendApiData("signup",this.state)
         console.log(success)
         if (success.validLogin) {
           alert("Valid Credentials!")
@@ -38,10 +50,16 @@ class LoginPage extends React.Component {
         return (
           <div class="wrapper">
             <h1>Log In:</h1>
-            <form onSubmit={this.handleSubmit} class="loginBox">
-                <label class="loginForm">
+            <form onSubmit={this.handleSubmit} class="signupBox">
+                <label class="signupForm">
                   <input id="username" type="text" placeholder="Your Username" value={this.state.Username} onChange={this.handleUsernameChange} />
+                  <div id="fullName">
+                    <input id="firstName" type="text" placeholder="First name" value={this.state.firstName} onchange={this.handleFirstNameChange} />
+                    <div id="nameSpacer"></div>
+                    <input id="surName" type="text" placeholder="Last name" value={this.state.surName} onchange={this.handleSurNameChange} />
+                  </div>
                   <input id="password" type="password" placeholder="Password" value={this.state.Password} onChange={this.handlePasswordChange} />
+                  <input id="password2" type="password" placeholder="Re-type Password" value={this.state.Password2} onChange={this.handlePassword2Change} />
                   <input id="submit" type="submit" value="Submit" />
               </label>
             </form>
@@ -51,4 +69,4 @@ class LoginPage extends React.Component {
     }
 }
 
-export default LoginPage;
+export default SignUpPage

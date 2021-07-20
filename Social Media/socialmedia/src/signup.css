@@ -1,0 +1,26 @@
+#firstName {
+    flex: 1 1;
+    width:auto;
+}
+#surName {
+    flex: 1 1;
+    width:auto;
+}
+#fullName {
+    display:flex;
+    width:100%;
+}
+#nameSpacer {
+    min-width: 5%;
+}
+.signupBox {
+    width:60%;
+    margin: auto;
+}
+.signupForm input {
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}

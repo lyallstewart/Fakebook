@@ -6,6 +6,7 @@ import {Router, Switch, Route} from "react-router-dom";
 import CreatePost from "./createPost.js";
 import LoginPage from "./login.js";
 import history from "./history.js";
+import SignUpPage from './signup';
 
 //Here we could add potentially support for storing login details in cookies
 
@@ -35,6 +36,7 @@ class App extends React.Component {
             <Route path="/profile"><h1>Profile</h1></Route>
             <Route path="/post"><CreatePost globals={this.state}/></Route>
             <Route path="/login"><LoginPage globals={this.state} loginCallback={this.changeLoginDetails}/></Route>
+            <Route path="/signup"><SignUpPage globals={this.state} /></Route>
         </Switch>
         </Router>
         </>
