@@ -61,15 +61,16 @@ db.once('open', async function() {//wait for connection connected
     console.log("mainpage!")
     res.send("TEST TEST TEST PLEASE WORK")
   })
-  //Handle get requests to /friend/<UserId>
-  app.get("/friend/:id",async (req, res) => {
-    user = await Users.findOne({userId:parseInt(req.params.id)})
-    console.log(`USER ${req.params.id}:`,user)
+  //Handle get requests to /friend/<username>
+  app.get("/friend/:username",async (req, res) => {
+    console.log(req.params.username)
+    user = await Users.findOne({username:req.params.username})
+    console.log(`USER ${req.params.username}:`,user)
       res.send(user)})
 
   //Handle get requests to /friendsToDisplay
   app.get("/friendsToDisplay",(req, res) => {
-    res.send([1, 2, 3, 4, 5])
+    res.send(["48panda", "GalifreyTom", "GamerJ57", "Gollum7412", "kurat_maqas"])
   })
 
   //Handle get requests to /post/<PostId>
@@ -85,9 +86,6 @@ db.once('open', async function() {//wait for connection connected
   })
 
   app.post("/login",async (req,res) => {
-    res.send({validLogin:true})
-    return
-    
     console.log(`USERNAME:${req.body.Username},PASSWORD:${req.body.Password}`)
     user = await Users.findOne({username:req.body.Username,password:req.body.Password})
     if (user===undefined) {
@@ -96,7 +94,17 @@ db.once('open', async function() {//wait for connection connected
       res.send({validLogin:true})
     }
   })
- 
+  app.post("/signup",async (req,res) => {
+    console.log(req.body)
+    user = await Users.findOne({username:req.body.Username})
+    console.log(user)
+    if (user===undefined || user===null) {
+      //Let's create a new user!
+      res.send({validLogin:true})
+    } else {
+      res.send({validLogin:false,error:"Username already taken."})
+    }
+  })
  })
  
    //Start listening on port

@@ -24,3 +24,11 @@
     padding-left: 0px;
     padding-right: 0px;
 }
+#error {
+    background-color: red;
+    height: min-content;
+}
+#submiterror {
+    background-color: red;
+    height: min-content;
+}
