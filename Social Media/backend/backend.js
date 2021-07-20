@@ -11,7 +11,8 @@ var mongoose = require('mongoose');
 const express = require('express')
 var cors = require('cors');
 
-
+// get crypto (the hashing thing)
+const crypto = require('crypto');
 
 // API Connection:
 //setup app
@@ -38,12 +39,11 @@ db.once('open', async function() {//wait for connection connected
   console.log("Connected to mongodb")
   //Define a couple Schemas
   const UserSchema = mongoose.Schema({
-    userId:Number,
     username:String,
-    password:String,
     profilePictureUrl:String,
     firstName:String,
-    surName:String
+    surName:String,
+    authHash:String
   })
   const PostSchema = mongoose.Schema({
     postId:Number,
@@ -61,15 +61,16 @@ db.once('open', async function() {//wait for connection connected
     console.log("mainpage!")
     res.send("TEST TEST TEST PLEASE WORK")
   })
-  //Handle get requests to /friend/<UserId>
-  app.get("/friend/:id",async (req, res) => {
-    user = await Users.findOne({userId:parseInt(req.params.id)})
-    console.log(`USER ${req.params.id}:`,user)
+  //Handle get requests to /friend/<username>
+  app.get("/friend/:username",async (req, res) => {
+    console.log(req.params.username)
+    user = await Users.findOne({username:req.params.username})
+    console.log(`USER ${req.params.username}:`,user)
       res.send(user)})
 
   //Handle get requests to /friendsToDisplay
   app.get("/friendsToDisplay",(req, res) => {
-    res.send([1, 2, 3, 4, 5])
+    res.send(["48panda", "GalifreyTom", "GamerJ57", "Gollum7412", "kurat_maqas","Acooldude"])
   })
 
   //Handle get requests to /post/<PostId>
@@ -86,14 +87,35 @@ db.once('open', async function() {//wait for connection connected
 
   app.post("/login",async (req,res) => {
     console.log(`USERNAME:${req.body.Username},PASSWORD:${req.body.Password}`)
-    user = await Users.findOne({username:req.body.Username,password:req.body.Password})
-    if (user===undefined) {
+    console.log("HASH:",crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64"))
+    user = await Users.findOne({username:req.body.Username,authHash:crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64")})
+    if (user===undefined||user===null) {
       res.send({validLogin:false})
     } else {
-      res.send({validLogin:true})
+      res.send({validLogin:true,userDetails:user})
     }
   })
- 
+  app.post("/signup",async (req,res) => {
+    console.log(req.body)
+    user = await Users.findOne({username:req.body.Username})
+    console.log(user)
+    if (user===undefined || user===null) {
+      //Let's create a new user!
+      newUser = new Users({
+        username : req.body.Username,
+        firstName:req.body.firstName,
+        surName  :  req.body.surName,
+        profilePictureUrl:"https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg",
+        authHash: crypto.createHash("sha256")
+        .update(req.body.Username+req.body.Password)//Concatenate Username to stop all hashes with the same password being the same (in case we add password hints)
+        .digest("base64")
+      })
+      newUser.save()
+      res.send({validLogin:true})
+    } else {
+      res.send({validLogin:false,error:"Username already taken."})
+    }
+  })
  })
  
    //Start listening on port

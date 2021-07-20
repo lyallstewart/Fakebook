@@ -1,6 +1,7 @@
 import React from "react";
 import sendApiData from "./sendApiData.js"; 
 import './login.css'
+import FakeBookLink from "./fakeBookLink.js";
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -24,8 +25,8 @@ class LoginPage extends React.Component {
         console.log(success)
         if (success.validLogin) {
           alert("Valid Credentials!")
-          console.log("Calling Callback")
-          this.props.loginCallback({LoggedIn:true})
+          console.log(success.userDetails)
+          this.props.loginCallback({isLoggedIn:true,userDetails:success.userDetails})
           console.log(this.props.loginCallback)
         } else {
           alert("Credentials Invalid :(")
@@ -44,6 +45,7 @@ class LoginPage extends React.Component {
                   <input id="submit" type="submit" value="Submit" />
               </label>
             </form>
+            <FakeBookLink href="./signup">Don't have an account? Sign up.</FakeBookLink>
           </div>
         );
     }
