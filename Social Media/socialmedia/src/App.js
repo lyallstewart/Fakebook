@@ -14,7 +14,7 @@ import SignUpPage from './signup';
 class App extends React.Component {
     constructor() {
         super()
-        this.state={isLoggedIn:false,refresh:0}
+        this.state={isLoggedIn:false,refresh:0,userDetails:{}}
         this.changeLoginDetails = this.changeLoginDetails.bind(this)
     }
     changeLoginDetails(toChange) {

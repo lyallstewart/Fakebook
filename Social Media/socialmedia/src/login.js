@@ -25,8 +25,8 @@ class LoginPage extends React.Component {
         console.log(success)
         if (success.validLogin) {
           alert("Valid Credentials!")
-          console.log("Calling Callback")
-          this.props.loginCallback({isLoggedIn:true})
+          console.log(success.userDetails)
+          this.props.loginCallback({isLoggedIn:true,userDetails:success.userDetails})
           console.log(this.props.loginCallback)
         } else {
           alert("Credentials Invalid :(")

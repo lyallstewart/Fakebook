@@ -38,7 +38,6 @@ db.once('open', async function() {//wait for connection connected
   console.log("Connected to mongodb")
   //Define a couple Schemas
   const UserSchema = mongoose.Schema({
-    userId:Number,
     username:String,
     password:String,
     profilePictureUrl:String,
@@ -70,7 +69,7 @@ db.once('open', async function() {//wait for connection connected
 
   //Handle get requests to /friendsToDisplay
   app.get("/friendsToDisplay",(req, res) => {
-    res.send(["48panda", "GalifreyTom", "GamerJ57", "Gollum7412", "kurat_maqas"])
+    res.send(["48panda", "GalifreyTom", "GamerJ57", "Gollum7412", "kurat_maqas","Acooldude"])
   })
 
   //Handle get requests to /post/<PostId>
@@ -91,7 +90,7 @@ db.once('open', async function() {//wait for connection connected
     if (user===undefined) {
       res.send({validLogin:false})
     } else {
-      res.send({validLogin:true})
+      res.send({validLogin:true,userDetails:user})
     }
   })
   app.post("/signup",async (req,res) => {
@@ -100,6 +99,14 @@ db.once('open', async function() {//wait for connection connected
     console.log(user)
     if (user===undefined || user===null) {
       //Let's create a new user!
+      newUser = new Users({
+        username : req.body.Username,
+        password : req.body.Password,
+        firstName:req.body.firstName,
+        surName  :  req.body.surName,
+        profilePictureUrl:"https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"
+      })
+      newUser.save()
       res.send({validLogin:true})
     } else {
       res.send({validLogin:false,error:"Username already taken."})
