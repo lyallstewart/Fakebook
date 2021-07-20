@@ -24,12 +24,11 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB via Mongoose
-mongoose.connect("mongodb+srv://fakebook-api:5NWVTVQQcPC0f26d@cluster0.vtdsy.mongodb.net/FakeBook?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.fakeBookConnectionString, {useNewUrlParser: true, useUnifiedTopology: true});
 // You saw nothing
 //I saw everything
 // oh ****
 
-//And yes, by the time you're seeing this, if at all, the connection string is invalid.
 
 const db = mongoose.connection;//Get connection
 db.on('error', console.error.bind(console, 'connection error:'));//Error
