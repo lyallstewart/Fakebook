@@ -7,15 +7,18 @@ export class SignUpPage extends Component {
     constructor(props) {
         super(props);
         this.state = {Username: '',
-        Password:"",Password2:""};
+        Password:"",Password2:"",firstName:"",surName:""};
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handlePassword2Change = this.handlePassword2Change.bind(this);
         this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
         this.handleSurNameChange = this.handleSurNameChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.checkForErrors = this.checkForErrors.bind(this);
       }
-    
+    checkForErrors() {
+        //Check for problems with the form before sending it
+    }
     handleUsernameChange(event) {
               this.setState({Username: event.target.value});  
     }
