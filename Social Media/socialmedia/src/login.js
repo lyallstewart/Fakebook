@@ -3,12 +3,13 @@ import sendApiData from "./sendApiData.js";
 import './login.css'
 import FakeBookLink from "./fakeBookLink.js";
 import { Cookies, getCookieConsentValue } from "react-cookie-consent";
+import VerificationInput from 'react-verification-input';
 
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {Username: '',
-        Password:""};
+        Password:"",twoFactor:""};
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,9 +26,11 @@ class LoginPage extends React.Component {
         let success = await sendApiData("login",this.state)
         console.log(success)
         if (success.validLogin) {
-          console.log(success.userDetails)
-          this.props.loginCallback({isLoggedIn:true,userDetails:success.userDetails})
-          console.log(this.props.loginCallback)
+          if (success.skip2FA) {
+            console.log(success.userDetails)
+            this.props.loginCallback({isLoggedIn:true,userDetails:success.userDetails})
+            console.log(this.props.loginCallback)
+          }
         } else {
           alert("Credentials Invalid :(")
         }
@@ -47,10 +50,14 @@ class LoginPage extends React.Component {
         }
       }
     }
+    changeTwoFactor(e) {
+      this.setstate()
+    }
     render() {
         return (
           <div class="wrapper">
             <h1>Log In:</h1>
+            <div id="phase1">
             <form onSubmit={this.handleSubmit} class="loginBox">
                 <label class="loginForm">
                   <input id="username" type="text" placeholder="Your Username" value={this.state.Username} onChange={this.handleUsernameChange} />
@@ -59,6 +66,8 @@ class LoginPage extends React.Component {
               </label>
             </form>
             <FakeBookLink href="./signup">Don't have an account? Sign up.</FakeBookLink>
+            </div>
+            <VerificationInput onChange={this.changeTwoFactor} placeholder="" removeDefaultStyles classNames={{container: "TWOFAcontainer",character: "TWOFAcharacter",characterInactive: "TWOFAcharacter--inactive",characterSelected: "TWOFAcharacter--selected"}}/>
           </div>
         );
     }

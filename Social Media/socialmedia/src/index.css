@@ -46,9 +46,9 @@ body {
 }
 
 .verticalItem {
-    background-color: #B7EFC5;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    background-color: #b4ddbe;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 .verticalSpacer {
     max-width: 5vw;

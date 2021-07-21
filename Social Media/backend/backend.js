@@ -109,12 +109,27 @@ db.once('open', async function() {//wait for connection connected
     console.log(`USERNAME:${req.body.Username},PASSWORD:${req.body.Password}`)
     console.log("HASH:",crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64"))
     user = await Users.findOne({username:req.body.Username,authHash:crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64")})
-    if (user===undefined||user===null||(user.useTwoFactor && twofactor.verifyToken(user.secret, req.body.twoFactor))) {
+    if (user===undefined||user===null) {
       res.send({validLogin:false})
     } else {
-      res.send({validLogin:true,userDetails:user})
+      if (user.useTwoFactor) {
+        res.send({validLogin:true,skip2FA:false,userDetails:user})
+      } else {
+        res.send({validLogin:true,skip2FA:true,userDetails:user})
+      }
     }
   })
+  app.post("/2falogin",async (req,res) => {
+    console.log(`USERNAME:${req.body.Username},PASSWORD:${req.body.Password}`)
+    console.log("HASH:",crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64"))
+    user = await Users.findOne({username:req.body.Username,authHash:crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64")})
+    if (user===undefined||user===null||(twofactor.verifyToken(user.secret, req.body.twoFactor))) {
+      res.send({validLogin:false})
+    } else {
+        res.send({validLogin:true,userDetails:user})
+      }
+    }
+  )
   app.post("/cookielogin",async (req,res) => {
     console.log(`USERNAME:${req.body.Username},HASH:${req.body.authHash}`)
     user = await Users.findOne({username:req.body.Username,authHash:req.body.authHash})
