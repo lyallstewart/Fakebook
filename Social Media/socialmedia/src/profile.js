@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Cookies, getCookieConsentValue } from "react-cookie-consent";
 import Switch from "react-switch";
-
+import QRCode from "qrcode.react"
 
 
 export class Profile extends Component {
@@ -34,7 +34,7 @@ export class Profile extends Component {
                     <h1>{this.props.globals.userDetails.firstName}'s Profile:</h1>
                     <img src={this.props.globals.userDetails.profilePictureUrl} alt={this.props.globals.userDetails.firstName+"'s Profile Picture"}/>
                     <p>Use cookies:</p><Switch onChange={this.handleChange} checked={this.state.cookie} />
-                    <button onClick={this.toggleQRCode}></button>
+                    <QRCode value={this.props.globals.userDetails.twoFactor.uri}/>
                 </div>
             )
         } 

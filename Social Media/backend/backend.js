@@ -2,7 +2,7 @@
 
 // //Import temp functions
 const getPostsToDisplay = require("./getPostsToDisplay.js")
-//Get mysql
+//Get mysqlb 
 const AutoIncrementFactory = require('mongoose-sequence');
 
 
@@ -18,6 +18,7 @@ const crypto = require('crypto');
 //get 2fa thingy
 
 const twofactor = require("node-2fa");
+
 
 // API Connection:
 //setup app
@@ -50,7 +51,13 @@ db.once('open', async function() {//wait for connection connected
     surName:String,
     authHash:String,
     friends: [String],
-    myPosts: [Number]
+    myPosts: [Number],
+    twoFactor:{
+      secret:String,
+      uri:String,
+      qr:String
+    },
+    useTwoFactor:Boolean
   })
   const PostSchema = mongoose.Schema({
     postId:Number,
@@ -66,14 +73,10 @@ db.once('open', async function() {//wait for connection connected
   const Users = mongoose.model('Users', UserSchema);
   const Posts = mongoose.model('Posts', PostSchema);
 
-  app.get("/",(req,res)=>{
-    console.log("mainpage!")
-    res.send("TEST TEST TEST PLEASE WORK")
-  })
   //Handle get requests to /friend/<username>
   app.get("/friend/:username",async (req, res) => {
     console.log(req.params.username)
-    user = await Users.findOne({username:req.params.username}, {_id:0,authHash:0})
+    user = await Users.findOne({username:req.params.username}, {_id:0,authHash:0,twoFactor:0})
     console.log(`USER ${req.params.username}:`,user)
       res.send(user)})
 
@@ -106,7 +109,7 @@ db.once('open', async function() {//wait for connection connected
     console.log(`USERNAME:${req.body.Username},PASSWORD:${req.body.Password}`)
     console.log("HASH:",crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64"))
     user = await Users.findOne({username:req.body.Username,authHash:crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64")})
-    if (user===undefined||user===null) {
+    if (user===undefined||user===null||(user.useTwoFactor && twofactor.verifyToken(user.secret, req.body.twoFactor))) {
       res.send({validLogin:false})
     } else {
       res.send({validLogin:true,userDetails:user})
@@ -134,7 +137,9 @@ db.once('open', async function() {//wait for connection connected
         profilePictureUrl:"https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg",
         authHash: crypto.createHash("sha256")
         .update(req.body.Username+req.body.Password)//Concatenate Username to stop all hashes with the same password being the same (in case we add password hints)
-        .digest("base64")
+        .digest("base64"),
+        twoFactor:twofactor.generateSecret({ name: "FakeBook", account: req.body.Username }),
+        useTwoFactor:false
       })
       newUser.save()
       res.send({validLogin:true})
