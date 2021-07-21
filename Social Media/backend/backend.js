@@ -32,7 +32,7 @@ mongoose.connect(process.env.fakeBookConnectionString, {useNewUrlParser: true, u
 
 
 const db = mongoose.connection;//Get connection
-
+mongoose.set('useFindAndModify', false);
 const AutoIncrement = AutoIncrementFactory(db);
 
 db.on('error', console.error.bind(console, 'connection error:'));//Error
@@ -46,14 +46,16 @@ db.once('open', async function() {//wait for connection connected
     profilePictureUrl:String,
     firstName:String,
     surName:String,
-    authHash:String
+    authHash:String,
+    myPosts: [Number]
   })
   const PostSchema = mongoose.Schema({
     postId:Number,
     contentType: String,
     videoType: String,
     textContent: String,
-    mediaSource: String
+    mediaSource: String,
+    user: String
   })
   //Post increment
   PostSchema.plugin(AutoIncrement, {inc_field: 'postId'});
@@ -84,9 +86,17 @@ db.once('open', async function() {//wait for connection connected
       res.send(post)
   })
 
-  //Handle get requests to /postToDisplay
-  app.get("/postsToDisplay",(req, res) => {
-      res.send(getPostsToDisplay())
+  //Handle get requests to /postToDisplay/USERNAME/AMOUNTOFPOSTS
+  app.get("/postsToDisplay/:id/:amount",async (req, res) => {
+      posts= []
+      user = await Users.findOne({username:req.params.id})
+      for (const friend of user._doc.friends) {
+        friendData = await Users.findOne({username:friend})
+        posts = posts.concat(friendData._doc.myPosts)
+      }
+      posts.sort((a, b) => b - a)
+      console.log("POSTS",posts.slice(0, req.params.amount))
+      res.send(posts.slice(0, req.params.amount))
   })
 
   app.post("/login",async (req,res) => {
@@ -132,9 +142,23 @@ db.once('open', async function() {//wait for connection connected
       contentType: req.body.contentType,
       videoType: req.body.videoType,
       textContent: req.body.textContent,
-      mediaSource: mediaSource
+      mediaSource: mediaSource,
+      user: req.body.userDetails.username
     })
     newPost.save()
+    newPost = await Posts.findOne({
+      contentType: req.body.contentType,
+      videoType: req.body.videoType,
+      textContent: req.body.textContent,
+      mediaSource: mediaSource,
+      user: req.body.userDetails.username
+    })
+    console.log(newPost._doc.postId)
+    await Users.findOneAndUpdate(
+      { username: req.body.userDetails.username }, 
+      { $push: { myPosts: newPost._doc.postId }}
+    )
+    
     res.send({validLogin:true})
 })
 

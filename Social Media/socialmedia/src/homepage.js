@@ -41,7 +41,7 @@ class HomePage extends React.Component {
           </div>
           <div className="flex-item verticalSpacer"></div>
           <div className="flex-item verticalItem" id="posts">
-            <PostArea />
+            <PostArea globals={this.props.globals}/>
           </div>
       </div>
     </div>

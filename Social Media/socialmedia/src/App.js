@@ -49,7 +49,6 @@ class App extends React.Component {
                 <Navbar globals={this.state}/>
                 <Router history={history}>
                 <Switch>
-                    <Route path="/post"><CreatePost globals={this.state}/></Route>
                     <Route exact path="/"><LoginPage globals={this.state} loginCallback={this.changeLoginDetails}/></Route>
                     <Route path="/login"><LoginPage globals={this.state} loginCallback={this.changeLoginDetails}/></Route>
                     <Route path="/signup"><SignUpPage globals={this.state} /></Route>
