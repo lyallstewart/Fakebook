@@ -1,9 +1,10 @@
 //Ummmm
 
 // //Import temp functions
-const getPostData = require("./getPostData.js")
 const getPostsToDisplay = require("./getPostsToDisplay.js")
 //Get mysql
+const AutoIncrementFactory = require('mongoose-sequence');
+
 
 var mongoose = require('mongoose');
 
@@ -31,6 +32,9 @@ mongoose.connect(process.env.fakeBookConnectionString, {useNewUrlParser: true, u
 
 
 const db = mongoose.connection;//Get connection
+mongoose.set('useFindAndModify', false);
+const AutoIncrement = AutoIncrementFactory(db);
+
 db.on('error', console.error.bind(console, 'connection error:'));//Error
 
   //
@@ -42,16 +46,20 @@ db.once('open', async function() {//wait for connection connected
     profilePictureUrl:String,
     firstName:String,
     surName:String,
-    authHash:String
+    authHash:String,
+    friends: [String],
+    myPosts: [Number]
   })
   const PostSchema = mongoose.Schema({
     postId:Number,
     contentType: String,
     videoType: String,
     textContent: String,
-    mediaSource: String
+    mediaSource: String,
+    user: String
   })
-
+  //Post increment
+  PostSchema.plugin(AutoIncrement, {inc_field: 'postId'});
   //Define a couple Models
   const Users = mongoose.model('Users', UserSchema);
   const Posts = mongoose.model('Posts', PostSchema);
@@ -63,7 +71,7 @@ db.once('open', async function() {//wait for connection connected
   //Handle get requests to /friend/<username>
   app.get("/friend/:username",async (req, res) => {
     console.log(req.params.username)
-    user = await Users.findOne({username:req.params.username})
+    user = await Users.findOne({username:req.params.username}, {_id:0,authHash:0})
     console.log(`USER ${req.params.username}:`,user)
       res.send(user)})
 
@@ -79,15 +87,32 @@ db.once('open', async function() {//wait for connection connected
       res.send(post)
   })
 
-  //Handle get requests to /postToDisplay
-  app.get("/postsToDisplay",(req, res) => {
-      res.send(getPostsToDisplay())
+  //Handle get requests to /postToDisplay/USERNAME/AMOUNTOFPOSTS
+  app.get("/postsToDisplay/:id/:amount",async (req, res) => {
+      posts= []
+      user = await Users.findOne({username:req.params.id})
+      for (const friend of user._doc.friends) {
+        friendData = await Users.findOne({username:friend})
+        posts = posts.concat(friendData._doc.myPosts)
+      }
+      posts.sort((a, b) => b - a)
+      console.log("POSTS",posts.slice(0, req.params.amount))
+      res.send(posts.slice(0, req.params.amount))
   })
 
   app.post("/login",async (req,res) => {
     console.log(`USERNAME:${req.body.Username},PASSWORD:${req.body.Password}`)
     console.log("HASH:",crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64"))
     user = await Users.findOne({username:req.body.Username,authHash:crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64")})
+    if (user===undefined||user===null) {
+      res.send({validLogin:false})
+    } else {
+      res.send({validLogin:true,userDetails:user})
+    }
+  })
+  app.post("/cookielogin",async (req,res) => {
+    console.log(`USERNAME:${req.body.Username},HASH:${req.body.authHash}`)
+    user = await Users.findOne({username:req.body.Username,authHash:req.body.authHash})
     if (user===undefined||user===null) {
       res.send({validLogin:false})
     } else {
@@ -115,8 +140,39 @@ db.once('open', async function() {//wait for connection connected
       res.send({validLogin:false,error:"Username already taken."})
     }
   })
- })
  
+ app.post("/create",async (req,res) => {
+
+    //Let's create a new user!
+    mediaSource = req.body.mediaSource
+    if (req.body.contentType=="video" && req.body.videoType=="youtube") {
+      mediaSource=mediaSource.slice(mediaSource.length - 11)
+    }
+    newPost = new Posts({
+      contentType: req.body.contentType,
+      videoType: req.body.videoType,
+      textContent: req.body.textContent,
+      mediaSource: mediaSource,
+      user: req.body.userDetails.username
+    })
+    newPost.save()
+    newPost = await Posts.findOne({
+      contentType: req.body.contentType,
+      videoType: req.body.videoType,
+      textContent: req.body.textContent,
+      mediaSource: mediaSource,
+      user: req.body.userDetails.username
+    })
+    console.log(newPost._doc.postId)
+    await Users.findOneAndUpdate(
+      { username: req.body.userDetails.username }, 
+      { $push: { myPosts: newPost._doc.postId }}
+    )
+    
+    res.send({validLogin:true})
+})
+
+})
    //Start listening on port
 app.listen(port, () => {
   //console.log(`Server is listening at http://localhost:${port}`)

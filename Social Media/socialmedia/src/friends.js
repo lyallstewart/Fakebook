@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import "./post.css";
 import "./App.css";
 import "./friends.css";
-import getApiData from './getApiData';
+import getApiData from './getApiData.js';
 
 
 class Friend extends Component {

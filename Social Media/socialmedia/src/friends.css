@@ -3,12 +3,14 @@
     margin-bottom: 10px;
     padding-bottom: 10px;
     vertical-align: middle;
+    width:100%
   }
   
 .friendNameContainer {
   display:inline-block;
   font-size: 18px;
-  max-width: 100%;
+  max-width: calc(100% - 45px);
+
 
 }
 .friendName {
@@ -17,6 +19,7 @@
     text-overflow: ellipsis;
     max-width: 100%;
     overflow:hidden; 
+    white-space: nowrap;
 }
   
 .profilePicture {
@@ -29,4 +32,8 @@
 .friendUsername {
   font-size: 12;
   float: middle;
+  overflow:hidden; 
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }

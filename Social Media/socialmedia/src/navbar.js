@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './nav.css';
 import './index.css'
-import history from './history';
+import history from './history.js';
 import FakeBookLink from "./fakeBookLink.js";
 
 class Navbar extends Component {

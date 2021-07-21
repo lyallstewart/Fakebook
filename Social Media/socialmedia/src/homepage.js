@@ -2,15 +2,11 @@ import React from 'react';
 import './index.css';
 import PostArea from './postArea.js';
 import Friend from "./friends.js";
-import getApiData from './getApiData';
 
 class FriendsList extends React.Component {
-  constructor() {
-    super()
-    this.state={friends:[]}
-}
-componentDidMount() {
-    getApiData("friendsToDisplay").then(json => this.setState({friends:json}));
+  constructor(props) {
+    super(props)
+    this.state={friends:this.props.friends}
 }
   render() {
     return (
@@ -39,12 +35,12 @@ class HomePage extends React.Component {
       <div className='homepage'>
         <div className="flex-container">
           <div className="flex-item verticalItem friendsItemLeft" id="friends">
-            <FriendsList />
+            <FriendsList friends={this.props.globals.userDetails.friends}/>
             <FriendsSuggestions />
           </div>
           <div className="flex-item verticalSpacer"></div>
           <div className="flex-item verticalItem" id="posts">
-            <PostArea />
+            <PostArea globals={this.props.globals}/>
           </div>
       </div>
     </div>

@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import getApiData from './getApiData';
-import Post from './post';
+import getApiData from './getApiData.js';
+import Post from './post.js';
 import "./App.css";
 import"./post.css";
 
 class PostArea extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state={posts:[]}
     }
     componentDidMount() {
-        getApiData("postsToDisplay").then(json => this.setState({posts:json}));
+        console.log("GETTING POST DATA","postsToDisplay/"+this.props.globals.userDetails.username+"/10")
+        getApiData("postsToDisplay/"+this.props.globals.userDetails.username+"/10").then(json => this.setState({posts:json}));
 
     }
     render() {

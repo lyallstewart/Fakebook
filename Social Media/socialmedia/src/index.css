@@ -68,3 +68,17 @@ body {
     padding:10px;
     font-size:10px;
 }
+.CookiePolicy {
+  background-color: gray;
+  width:50vw;
+  height:50vh;
+  border-radius: 5%;
+}
+.CookiePolicy h2 {
+  margin: auto;
+  text-align: center;
+}
+.CookiePolicy p {
+  font-size: 2vh;
+  margin: 2vw;
+}
