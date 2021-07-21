@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import getApiData from './getApiData';
-import Post from './post';
+import getApiData from './getApiData.js';
+import Post from './post.js';
 import "./App.css";
 import"./post.css";
 

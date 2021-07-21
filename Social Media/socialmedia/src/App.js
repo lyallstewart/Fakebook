@@ -6,8 +6,8 @@ import {Router, Switch, Route} from "react-router-dom";
 import CreatePost from "./createPost.js";
 import LoginPage from "./login.js";
 import history from "./history.js";
-import SignUpPage from './signup';
-import Profile from './profile';
+import SignUpPage from './signup.js';
+import Profile from './profile.js';
 
 //Here we could add potentially support for storing login details in cookies
 

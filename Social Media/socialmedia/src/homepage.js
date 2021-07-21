@@ -2,7 +2,6 @@ import React from 'react';
 import './index.css';
 import PostArea from './postArea.js';
 import Friend from "./friends.js";
-import getApiData from './getApiData';
 
 class FriendsList extends React.Component {
   constructor(props) {
