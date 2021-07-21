@@ -2,6 +2,7 @@ import React from "react";
 import sendApiData from "./sendApiData.js"; 
 import './login.css'
 import FakeBookLink from "./fakeBookLink.js";
+import { Cookies, getCookieConsentValue } from "react-cookie-consent";
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -24,7 +25,6 @@ class LoginPage extends React.Component {
         let success = await sendApiData("login",this.state)
         console.log(success)
         if (success.validLogin) {
-          alert("Valid Credentials!")
           console.log(success.userDetails)
           this.props.loginCallback({isLoggedIn:true,userDetails:success.userDetails})
           console.log(this.props.loginCallback)
@@ -33,7 +33,20 @@ class LoginPage extends React.Component {
         }
         
       }
-    
+    async componentDidMount() {
+      if (getCookieConsentValue()) {
+        let Username=Cookies.get("username")
+        let authHash=Cookies.get("authHash")
+        if (Username && authHash) {
+          let success = await sendApiData("cookielogin",{Username:Username,authHash:authHash})
+          if (success.validLogin) {
+            console.log(success.userDetails)
+            this.props.loginCallback({isLoggedIn:true,userDetails:success.userDetails})
+            console.log(this.props.loginCallback)
+          }
+        }
+      }
+    }
     render() {
         return (
           <div class="wrapper">

@@ -47,6 +47,7 @@ db.once('open', async function() {//wait for connection connected
     firstName:String,
     surName:String,
     authHash:String,
+    friends: [String],
     myPosts: [Number]
   })
   const PostSchema = mongoose.Schema({
@@ -70,7 +71,7 @@ db.once('open', async function() {//wait for connection connected
   //Handle get requests to /friend/<username>
   app.get("/friend/:username",async (req, res) => {
     console.log(req.params.username)
-    user = await Users.findOne({username:req.params.username})
+    user = await Users.findOne({username:req.params.username}, {_id:0,authHash:0})
     console.log(`USER ${req.params.username}:`,user)
       res.send(user)})
 
@@ -103,6 +104,15 @@ db.once('open', async function() {//wait for connection connected
     console.log(`USERNAME:${req.body.Username},PASSWORD:${req.body.Password}`)
     console.log("HASH:",crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64"))
     user = await Users.findOne({username:req.body.Username,authHash:crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64")})
+    if (user===undefined||user===null) {
+      res.send({validLogin:false})
+    } else {
+      res.send({validLogin:true,userDetails:user})
+    }
+  })
+  app.post("/cookielogin",async (req,res) => {
+    console.log(`USERNAME:${req.body.Username},HASH:${req.body.authHash}`)
+    user = await Users.findOne({username:req.body.Username,authHash:req.body.authHash})
     if (user===undefined||user===null) {
       res.send({validLogin:false})
     } else {

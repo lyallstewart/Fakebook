@@ -1,3 +1,5 @@
+//imports
+
 import React from 'react';
 import './index.css';
 import HomePage from './homepage';
@@ -8,50 +10,49 @@ import LoginPage from "./login.js";
 import history from "./history.js";
 import SignUpPage from './signup.js';
 import Profile from './profile.js';
+import { Cookies, getCookieConsentValue } from "react-cookie-consent";
 
 //Here we could add potentially support for storing login details in cookies
 
 
 class App extends React.Component {
-    constructor() {
+    constructor() {//standard constructor stuff
         super()
         this.state={isLoggedIn:false,refresh:0,userDetails:{}}
         this.changeLoginDetails = this.changeLoginDetails.bind(this)
     }
     changeLoginDetails(toChange) {
-        console.log(`CHANGING STATE`,toChange)
         this.setState(toChange)
-        console.log(this.state)
+        if (toChange.isLoggedIn) {
+            if (getCookieConsentValue()) {
+                Cookies.set('username', toChange.userDetails.username, { expires: 7 })
+                Cookies.set("authHash", toChange.userDetails.authHash, { expires: 7 })
+            }
+        }
       }
-    componentDidUpdate() {
-        console.log(this.props.location)
-    }
     render(){
-        console.log("RENDER APP")
-        if (this.state.isLoggedIn) {
+        if (this.state.isLoggedIn) {//if logged in
             return(
                 <>
                 <Navbar globals={this.state}/>
                 <Router history={history}>
                 <Switch>
-                    <Route exact path="/"><HomePage globals={this.state}/></Route>
-                    <Route path="/profile"><Profile globals={this.state}/></Route>
-                    <Route path="/post"><CreatePost globals={this.state}/></Route>
-                    <Route path="/login"><LoginPage globals={this.state} loginCallback={this.changeLoginDetails}/></Route>
-                    <Route path="/signup"><SignUpPage globals={this.state} /></Route>
+                    <Route exact path="/"><HomePage globals={this.state}/></Route> {/*Provide access to the normal homepage */}
+                    <Route path="/profile"><Profile globals={this.state}/></Route> {/*Provide access to the profile page. */}
+                    <Route path="/post"><CreatePost globals={this.state}/></Route> {/*Provide access to the posts page. */}
                 </Switch>
                 </Router>
                 </>
             )
-        } else {
+        } else {//not logged in
             return(
                 <>
-                <Navbar globals={this.state}/>
                 <Router history={history}>
                 <Switch>
-                    <Route exact path="/"><LoginPage globals={this.state} loginCallback={this.changeLoginDetails}/></Route>
-                    <Route path="/login"><LoginPage globals={this.state} loginCallback={this.changeLoginDetails}/></Route>
-                    <Route path="/signup"><SignUpPage globals={this.state} /></Route>
+                    <Route exact path="/"><LoginPage globals={this.state} loginCallback={this.changeLoginDetails}/></Route> {/*Homepage is login page */}
+                    <Route path="/login"><LoginPage globals={this.state} loginCallback={this.changeLoginDetails}/></Route> {/* login page is login page */}
+                    <Route path="/signup"><SignUpPage globals={this.state} /></Route> {/*signup page */}
+                    <Route path="/"><LoginPage globals={this.state} loginCallback={this.changeLoginDetails}/></Route>
                 </Switch>
                 </Router>
                 </>

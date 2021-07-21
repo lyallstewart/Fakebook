@@ -24,7 +24,6 @@ export class CreatePost extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         await sendApiData("create",this.state)
-        alert('A post was submitted: ' +JSON.stringify(this.state));
         console.log("Post submitted" , this.state)
         
       }
