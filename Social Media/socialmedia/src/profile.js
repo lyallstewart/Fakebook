@@ -12,7 +12,7 @@ export class Profile extends Component {
     }
     handleChange(checked) {
         this.setState({cookie:checked})
-        Cookies.set("CookieConsent",checked,{expires:7})
+        Cookies.set("CookieConsent",Boolean(checked),{expires:7})
         console.log(getCookieConsentValue())
         if (checked) {
             Cookies.set("username",this.props.globals.userDetails.username,{expires:7})
@@ -28,11 +28,13 @@ export class Profile extends Component {
                 <h1>You are not logged in!</h1>
             )
         } else {
+            console.log(this.props.globals.userDetails)
             return (
                 <div>
                     <h1>{this.props.globals.userDetails.firstName}'s Profile:</h1>
-                    <img scr={this.props.globals.userDetails.ProfilePictureUrl}/>
+                    <img src={this.props.globals.userDetails.profilePictureUrl} alt={this.props.globals.userDetails.firstName+"'s Profile Picture"}/>
                     <p>Use cookies:</p><Switch onChange={this.handleChange} checked={this.state.cookie} />
+                    <button onClick={this.toggleQRCode}></button>
                 </div>
             )
         } 

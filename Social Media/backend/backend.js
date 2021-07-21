@@ -15,6 +15,10 @@ var cors = require('cors');
 // get crypto (the hashing thing)
 const crypto = require('crypto');
 
+//get 2fa thingy
+
+const twofactor = require("node-2fa");
+
 // API Connection:
 //setup app
 const app = express()
@@ -26,9 +30,7 @@ app.use(express.json());
 
 // Connect to MongoDB via Mongoose
 mongoose.connect(process.env.fakeBookConnectionString, {useNewUrlParser: true, useUnifiedTopology: true});
-// You saw nothing
-//I saw everything
-// oh ****
+// Connection string is kept in an environment variable locally for security
 
 
 const db = mongoose.connection;//Get connection
