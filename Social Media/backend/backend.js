@@ -183,7 +183,7 @@ db.once('open', async function() {//wait for connection connected
       mediaSource: mediaSource,
       user: req.body.userDetails.username
     })
-    newPost.save()
+    await newPost.save()
     newPost = await Posts.findOne({
       contentType: req.body.contentType,
       videoType: req.body.videoType,
