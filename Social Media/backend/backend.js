@@ -122,6 +122,7 @@ db.once('open', async function() {//wait for connection connected
   app.post("/2falogin",async (req,res) => {
     console.log(`USERNAME:${req.body.Username},PASSWORD:${req.body.Password}`)
     console.log("HASH:",crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64"))
+    console.log("2FA:",req.body.twoFactor)
     user = await Users.findOne({username:req.body.Username,authHash:crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64")})
     if (user===undefined||user===null||(twofactor.verifyToken(user.secret, req.body.twoFactor))) {
       res.send({validLogin:false})
@@ -130,6 +131,11 @@ db.once('open', async function() {//wait for connection connected
       }
     }
   )
+  app.post("/2FAchange/:newState",async (req,res) => {
+    console.log(`USERNAME:${req.body.Username},HASH:${req.body.authHash}`)
+    user = await Users.findOneAndUpdate({username:req.body.Username,authHash:req.body.authHash},{useTwoFactor:(/true/i).test(req.params.newState)},{new:true})
+    res.send({newState:user.useTwoFactor})
+  })
   app.post("/cookielogin",async (req,res) => {
     console.log(`USERNAME:${req.body.Username},HASH:${req.body.authHash}`)
     user = await Users.findOne({username:req.body.Username,authHash:req.body.authHash})

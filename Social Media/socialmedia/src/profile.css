@@ -12,3 +12,8 @@
 .profile-page {
     text-align: center;
 }
+
+.profile-page div p {
+    font-size: 28px;
+    display: inline;
+}
