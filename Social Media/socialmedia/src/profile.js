@@ -38,8 +38,8 @@ export class Profile extends Component {
             console.log(this.props.globals.userDetails)
             return (
                 <div className="profile-page">
+                    <img className="profile-pic" src={this.props.globals.userDetails.profilePictureUrl} alt={this.props.globals.userDetails.firstName+"'s Profile Picture"}/><br/>
                     <h1 className="profile-title">{this.props.globals.userDetails.firstName}'s Profile:</h1>
-                    <img className="profile-pic" src={this.props.globals.userDetails.profilePictureUrl} alt={this.props.globals.userDetails.firstName+"'s Profile Picture"}/>
                     <div><p>Use cookies</p><Switch onChange={this.handleCookieChange} checked={this.state.cookie} /></div>
                     <div><p>Use 2FactorAuthentication</p><Switch onChange={this.handle2FAChange} checked={this.state.tfa} /></div>
                     <p>This is your 2FA code. scan it with any authenticator app.</p>
