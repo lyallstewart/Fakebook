@@ -55,6 +55,9 @@ app.on('connection', connection =>
 // Publish all events to the `everybody` channel
 app.publish(data => app.channel('everybody'));
 
+app.get("/",(req,res) => {
+  res.send("Hi!")
+})
 // Start the server
 app.listen(3030).on('listening', () =>
   console.log('Feathers server listening on localhost:3030')
