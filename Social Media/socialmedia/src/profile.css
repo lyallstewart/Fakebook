@@ -1,0 +1,20 @@
+.profile-pic {
+    display: inline;
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+}
+
+.profile-title {
+    display: inline;
+}
+
+.profile-page {
+    text-align: center;
+}
+
+.profile-page div p {
+    font-size: 25px;
+    display: inline;
+    vertical-align: super;
+}

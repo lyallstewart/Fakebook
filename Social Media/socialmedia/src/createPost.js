@@ -55,12 +55,14 @@ export class CreatePost extends Component {
                         <label htmlFor="image" className="option image">Create image post</label>
                         <label htmlFor="video" className="option video">Create video post</label>
                     </div>
-                    {this.state.contentType==="video"?<div id="videoType" className="ratioHolder">
-                        <input type="radio" id="youtube" value="youtube" checked={this.state.videoType === "youtube"} onChange={this.onVideoTypeChange} />
-                        <input type="radio" id="mp4" value="mp4" checked={this.state.videoType === "mp4"} onChange={this.onVideoTypeChange} />
-                        <label htmlFor="youtube" className="option youtube">Upload youtube post</label>
-                        <label htmlFor="mp4" className="option mp4">Upload MP4 post</label>
-                    </div>:<></>}
+                    {
+                      this.state.contentType==="video"?<div id="videoType" className="ratioHolder">
+                          <input type="radio" id="youtube" value="youtube" checked={this.state.videoType === "youtube"} onChange={this.onVideoTypeChange} />
+                          <input type="radio" id="mp4" value="mp4" checked={this.state.videoType === "mp4"} onChange={this.onVideoTypeChange} />
+                          <label htmlFor="youtube" className="option youtube">Upload youtube post</label>
+                          <label htmlFor="mp4" className="option mp4">Upload MP4 post</label>
+                      </div>:<></>
+                    }
                     {this.state.contentType==="text"?<></>:<input className="textContentInput" placeholder="Place Link here!" type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} value={this.state.mediaSource} onChange={this.handleMediaSourceChange} />}
               <input type="submit" value="Submit" />
             </form>

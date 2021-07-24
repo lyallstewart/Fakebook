@@ -17,12 +17,12 @@ input[type=button], input[type=submit], input[type=reset] {
       border: none;
       margin: 5px;
       padding: 5px;
-      border-bottom: green 1px solid;
+      border-bottom: #4CAF50 1px solid;
       outline: none;
   }
 
   input:focus {
-      border: 1px solid green;
+      border: 1px solid #4CAF50;
   }
 
   .wrapper {
@@ -38,4 +38,33 @@ input[type=button], input[type=submit], input[type=reset] {
   html, body {
    height: 100%;
    width: 100%;   
+  }
+
+  .TWOFAcontainer {
+    height: 100px;
+    width: 600px;
+    margin: auto;
+  }
+  
+  .TWOFAcharacter {
+    line-height: 100px;
+    font-size: 72px;
+    color: black;
+    background-color: rgba(0,0,0,0.2);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    margin-left: 8px;
+  }
+  
+  .TWOFAcharacter:first-child {
+    margin-left: 0;
+  }
+  
+  .TWOFAcharacter--inactive {
+    background-color: rgba(0,0,0,0.1);
+  }
+  
+  .TWOFAcharacter--selected {
+    color: #4CAF50;
+    border: 3px solid #4CAF50;
   }

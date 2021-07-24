@@ -2,7 +2,7 @@
 
 // //Import temp functions
 const getPostsToDisplay = require("./getPostsToDisplay.js")
-//Get mysql
+//Get mysqlb 
 const AutoIncrementFactory = require('mongoose-sequence');
 
 
@@ -15,6 +15,11 @@ var cors = require('cors');
 // get crypto (the hashing thing)
 const crypto = require('crypto');
 
+//get 2fa thingy
+
+const twofactor = require("node-2fa");
+
+
 // API Connection:
 //setup app
 const app = express()
@@ -26,9 +31,7 @@ app.use(express.json());
 
 // Connect to MongoDB via Mongoose
 mongoose.connect(process.env.fakeBookConnectionString, {useNewUrlParser: true, useUnifiedTopology: true});
-// You saw nothing
-//I saw everything
-// oh ****
+// Connection string is kept in an environment variable locally for security
 
 
 const db = mongoose.connection;//Get connection
@@ -48,7 +51,13 @@ db.once('open', async function() {//wait for connection connected
     surName:String,
     authHash:String,
     friends: [String],
-    myPosts: [Number]
+    myPosts: [Number],
+    twoFactor:{
+      secret:String,
+      uri:String,
+      qr:String
+    },
+    useTwoFactor:Boolean
   })
   const PostSchema = mongoose.Schema({
     postId:Number,
@@ -64,14 +73,10 @@ db.once('open', async function() {//wait for connection connected
   const Users = mongoose.model('Users', UserSchema);
   const Posts = mongoose.model('Posts', PostSchema);
 
-  app.get("/",(req,res)=>{
-    console.log("mainpage!")
-    res.send("TEST TEST TEST PLEASE WORK")
-  })
   //Handle get requests to /friend/<username>
   app.get("/friend/:username",async (req, res) => {
     console.log(req.params.username)
-    user = await Users.findOne({username:req.params.username}, {_id:0,authHash:0})
+    user = await Users.findOne({username:req.params.username}, {_id:0,authHash:0,twoFactor:0})
     console.log(`USER ${req.params.username}:`,user)
       res.send(user)})
 
@@ -107,8 +112,29 @@ db.once('open', async function() {//wait for connection connected
     if (user===undefined||user===null) {
       res.send({validLogin:false})
     } else {
-      res.send({validLogin:true,userDetails:user})
+      if (user.useTwoFactor) {
+        res.send({validLogin:true,skip2FA:false,userDetails:user})
+      } else {
+        res.send({validLogin:true,skip2FA:true,userDetails:user})
+      }
     }
+  })
+  app.post("/2falogin",async (req,res) => {
+    console.log(`USERNAME:${req.body.Username},PASSWORD:${req.body.Password}`)
+    console.log("HASH:",crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64"))
+    console.log("2FA:",req.body.twoFactor)
+    user = await Users.findOne({username:req.body.Username,authHash:crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64")})
+    if (user===undefined||user===null||(twofactor.verifyToken(user.secret, req.body.twoFactor))) {
+      res.send({validLogin:false})
+    } else {
+        res.send({validLogin:true,userDetails:user})
+      }
+    }
+  )
+  app.post("/2FAchange/:newState",async (req,res) => {
+    console.log(`USERNAME:${req.body.Username},HASH:${req.body.authHash}`)
+    user = await Users.findOneAndUpdate({username:req.body.Username,authHash:req.body.authHash},{useTwoFactor:(/true/i).test(req.params.newState)},{new:true})
+    res.send({newState:user.useTwoFactor})
   })
   app.post("/cookielogin",async (req,res) => {
     console.log(`USERNAME:${req.body.Username},HASH:${req.body.authHash}`)
@@ -132,7 +158,9 @@ db.once('open', async function() {//wait for connection connected
         profilePictureUrl:"https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg",
         authHash: crypto.createHash("sha256")
         .update(req.body.Username+req.body.Password)//Concatenate Username to stop all hashes with the same password being the same (in case we add password hints)
-        .digest("base64")
+        .digest("base64"),
+        twoFactor:twofactor.generateSecret({ name: "FakeBook", account: req.body.Username }),
+        useTwoFactor:false
       })
       newUser.save()
       res.send({validLogin:true})
@@ -155,7 +183,7 @@ db.once('open', async function() {//wait for connection connected
       mediaSource: mediaSource,
       user: req.body.userDetails.username
     })
-    newPost.save()
+    await newPost.save()
     newPost = await Posts.findOne({
       contentType: req.body.contentType,
       videoType: req.body.videoType,

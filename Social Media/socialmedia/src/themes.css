@@ -1,0 +1,6 @@
+.darkmode {
+    filter: invert(1) hue-rotate(180deg)
+}
+.darkmode img, .darkmode video, .darkmode iframe {
+    filter: invert(1) hue-rotate(180deg)
+}

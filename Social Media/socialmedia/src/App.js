@@ -11,6 +11,7 @@ import history from "./history.js";
 import SignUpPage from './signup.js';
 import Profile from './profile.js';
 import { Cookies, getCookieConsentValue } from "react-cookie-consent";
+import Logout from "./logout.js";
 
 //Here we could add potentially support for storing login details in cookies
 
@@ -39,6 +40,7 @@ class App extends React.Component {
                 <Switch>
                     <Route exact path="/"><HomePage globals={this.state}/></Route> {/*Provide access to the normal homepage */}
                     <Route path="/profile"><Profile globals={this.state}/></Route> {/*Provide access to the profile page. */}
+                    <Route path="/logout"><Logout globals={this.state}/></Route> {/*Provide access to the profile page. */}
                     <Route path="/post"><CreatePost globals={this.state}/></Route> {/*Provide access to the posts page. */}
                 </Switch>
                 </Router>

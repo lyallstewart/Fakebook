@@ -16,6 +16,7 @@
     "mongoose": "^5.13.3",
     "mongoose-sequence": "^5.3.1",
     "mysql": "^2.18.1",
+    "node-2fa": "^2.0.2",
     "server": "^1.0.34"
   }
 }
