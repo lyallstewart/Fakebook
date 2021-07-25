@@ -82,6 +82,7 @@ class LoginPage extends React.Component {
               </label>
             </form>
             <FakeBookLink href="./signup">Don't have an account? Sign up.</FakeBookLink>
+            <p  className="pwrdreset">Forgot your password? Have a good think and try to remember!</p>
             </div>
             <div id="phase2" style={{display:"none"}}>
               <VerificationInput onChange={this.changeTwoFactor} placeholder="" removeDefaultStyles classNames={{container: "TWOFAcontainer",character: "TWOFAcharacter",characterInactive: "TWOFAcharacter--inactive",characterSelected: "TWOFAcharacter--selected"}}/>

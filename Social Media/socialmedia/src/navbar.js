@@ -22,8 +22,8 @@ class Navbar extends Component {
                 <FakeBookLink href="./profile" className="active"> <img id="logo" src={this.props.globals.isLoggedIn?this.props.globals.userDetails.profilePictureUrl:"https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"} alt="a"/></FakeBookLink>
                 <FakeBookLink href="./post">New Post</FakeBookLink>
                 <FakeBookLink href="./">Posts</FakeBookLink>
-                <FakeBookLink href="./">Friends</FakeBookLink>
-                <FakeBookLink href={this.props.globals.isLoggedIn ?"./logout":"./login"}>{ this.props.globals.isLoggedIn ? <p>Sign out</p>:<p>Log in</p>}</FakeBookLink>
+                <FakeBookLink href="./friends">Friends</FakeBookLink>
+                <FakeBookLink href="./logout">Log out</FakeBookLink>
             </div></>
         )
     }

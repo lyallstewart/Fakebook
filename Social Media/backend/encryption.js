@@ -4,10 +4,6 @@ I am going to impliment RSA. Probably not 2048 bits though.
 It would be quite cool to fit the public key onto a QR code, and use that as the way to establish a connection
 */
 var forge = require('node-forge');
-
-var CryptoJS = require('crypto-js')
-
-function SHA256(string){return CryptoJS.enc.Base64.stringify(CryptoJS.SHA256(string))}function B64ToStr(base64){return CryptoJS.enc.Utf8.stringify(CryptoJS.enc.Base64.parse(base64))}function StrToB64(string){return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(string))}function NumToB64(number){return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Hex.parse(number.toString(16)))}function B64ToNum(base64){return parseInt("0x00"+CryptoJS.enc.Hex.stringify(CryptoJS.enc.Base64.parse(base64)))}function B64ToBigInt(base64){return BigInt("0x00"+CryptoJS.enc.Hex.stringify(CryptoJS.enc.Base64.parse(base64)))}
 //Apparently it is quite hard to find chonky primes, and my testing with small primes confirms this.
 
 function gcd(a,b) {

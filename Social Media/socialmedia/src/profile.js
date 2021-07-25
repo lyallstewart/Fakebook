@@ -43,6 +43,7 @@ export class Profile extends Component {
                     <div><p>Use cookies</p><Switch onChange={this.handleCookieChange} checked={this.state.cookie} /></div>
                     <div><p>Use 2FactorAuthentication</p><Switch onChange={this.handle2FAChange} checked={this.state.tfa} /></div>
                     <p>This is your 2FA code. scan it with any authenticator app.</p>
+                    <p style={{color: "red",textTransform: "uppercase"}}>Do not turn this on unless you know what you are doing or you will PERMANANTLY lose your account!</p>
                     <QRCode value={this.props.globals.userDetails.twoFactor.uri}/>
                 </div>
             )
