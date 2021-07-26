@@ -1,133 +1,88 @@
+//Ummmm
 
-app.use(express.json());// Connect to MongoDB via Mongoose
+// //Import temp functions
+const getPostsToDisplay = require("./getPostsToDisplay.js")
+//Get mysqlb 
+const AutoIncrementFactory = require('mongoose-sequence');
+
+
+var mongoose = require('mongoose');
+
+// Get server libraries
+const express = require('express')
+var cors = require('cors');
+
+// get crypto (the hashing thing)
+const crypto = require('crypto');
+
+//get 2fa thingy
+
+const twofactor = require("node-2fa");
+
+
+// API Connection:
+//setup app
+const app = express()
+const port = 3001
+
+//allow cross-origin
+app.use(cors());
+app.use(express.json());
+
+// Connect to MongoDB via Mongoose
+mongoose.connect(process.env.fakeBookConnectionString, {useNewUrlParser: true, useUnifiedTopology: true});
+// Connection string is kept in an environment variable locally for security
+
 
 const db = mongoose.connection;//Get connection
-const port = 3001//allow cross-origin
-
-
+mongoose.set('useFindAndModify', false);
 const AutoIncrement = AutoIncrementFactory(db);
-//setup app
-db.on('error', console.error.bind(console, 'connection error:'));//Errordb.once('open', async function() {//wait for connection connected
 
-//Define a couple Schemas
+db.on('error', console.error.bind(console, 'connection error:'));//Error
 
-username:String,
-
-firstName:String,
-var mongoose = require('mongoose');// Get server libraries
-authHash:String,
-
-myPosts: [Number],
-
-secret:String,
-const getPostsToDisplay = require("./getPostsToDisplay.js")
-qr:String
-
-useTwoFactor:Boolean,
-//Import temp functions
-  incomingFriendRequests:[String]
-//Get mysqlb 
-  const PostSchema = mongoose.Schema({
-const AutoIncrementFactory = require('mongoose-sequence');
-      contentType: String,
-
-      textContent: String,
-
-      user: String
-const express = require('express')
-      //Post increment
-var cors = require('cors');
-        //Define a couple Models
-// get crypto (the hashing thing)
-
-const crypto = require('crypto');
-        const Posts = mongoose.model('Posts', PostSchema);  //Handle get requests to /friend/<username>
-//get 2fa thingy
-console.log(req.params.username)
-const twofactor = require("node-2fa");
-  console.log(`USER ${req.params.username}:`,user)
-
-
-const app = express()app.use(cors());    mongoose.connect(process.env.fakeBookConnectionString, {useNewUrlParser: true, useUnifiedTopology: true});// Connection string is kept in an environment variable locally for securitymongoose.set('useFindAndModify', false);    console.log("Connected to mongodb")  const UserSchema = mongoose.Schema({    profilePictureUrl:String,    surName:String,    friends: [String],    twoFactor:{      uri:String,    },    outgoingFriendRequests:[String],  })    postId:Number,    videoType: String,    mediaSource: String,  })  PostSchema.plugin(AutoIncrement, {inc_field: 'postId'});  const Users = mongoose.model('Users', UserSchema);  app.get("/friend/:username",async (req, res) => {    user = await Users.findOne({username:req.params.username}, {_id:0,authHash:0,twoFactor:0})    res.send(user)})      //Handle get requests to /friendsToDisplay
-
-res.send(["48panda", "GalifreyTom", "GamerJ57", "Gollum7412", "kurat_maqas","Acooldude"])
-
-  
-
-  user = await Users.findOne({username:req.body.Username,authHash:req.body.authHash})
-
-    res.send({success:false})
-
-  //Valid user making the request.
-
-    if (user===undefined||user===null) {
-
-      } else {
-
-      if (user.incomingFriendRequests.includes(req.params.username)) {
-
-
-
-      res.send({success:false})
-
-      }
-
-      })
-
-      app.post("/declinefriendrequest/:username", async (req, res) => {
-
-
-
-})  app.get("/sendfriendrequest/:username", async (req, res) => {
-
-      user = await Users.findOne({username:req.body.username,authHash:req.body.authHash})
-
-        res.send({success:false})
-
-    //Valid user making the request.
-
-    if (otherUser===undefined||otherUser===null) {
-
-    } else {
-
-      console.log(user.incomingFriendRequests)
-
-    }
-
-    })
-
-    app.get("/getfriendsrequests/:username", async (req, res) => {
-
-
-
-
-
-
-  app.get("/friendsToDisplay",(req, res) => {
+  //
+db.once('open', async function() {//wait for connection connected
+  console.log("Connected to mongodb")
+  //Define a couple Schemas
+  const UserSchema = mongoose.Schema({
+    username:String,
+    profilePictureUrl:String,
+    firstName:String,
+    surName:String,
+    authHash:String,
+    friends: [String],
+    myPosts: [Number],
+    twoFactor:{
+      secret:String,
+      uri:String,
+      qr:String
+    },
+    useTwoFactor:Boolean
   })
-  app.post("/acceptfriendrequest/:username",async (req,res) => {
-    if (user===undefined||user===null) {
-    } else {
-      otherUser = await Users.findOne({username:req.params.username})
-        res.send({success:false})
-        //Valid user to accept request from.
-          //Theer is a friend request to accept
-        } else {
-        }
-    }
-  
-    console.log("decline")
+  const PostSchema = mongoose.Schema({
+    postId:Number,
+    contentType: String,
+    videoType: String,
+    textContent: String,
+    mediaSource: String,
+    user: String
+  })
+  //Post increment
+  PostSchema.plugin(AutoIncrement, {inc_field: 'postId'});
+  //Define a couple Models
+  const Users = mongoose.model('Users', UserSchema);
+  const Posts = mongoose.model('Posts', PostSchema);
 
-    console.log("post sent")
-    if (user===undefined||user===null) {
-    } else {
-      otherUser = await Users.findOne({username:req.params.username})
-        res.send({success:false})
-        //Valid user to send request to.
-        res.send("YES")
-    }
-  
-  
+  //Handle get requests to /friend/<username>
+  app.get("/friend/:username",async (req, res) => {
+    console.log(req.params.username)
+    user = await Users.findOne({username:req.params.username}, {_id:0,authHash:0,twoFactor:0})
+    console.log(`USER ${req.params.username}:`,user)
+      res.send(user)})
+
+  //Handle get requests to /friendsToDisplay
+  app.get("/friendsToDisplay",(req, res) => {
+    res.send(["48panda", "GalifreyTom", "GamerJ57", "Gollum7412", "kurat_maqas","Acooldude"])
   })
 
   //Handle get requests to /post/<PostId>
@@ -149,6 +104,7 @@ res.send(["48panda", "GalifreyTom", "GamerJ57", "Gollum7412", "kurat_maqas","Aco
       console.log("POSTS",posts.slice(0, req.params.amount))
       res.send(posts.slice(0, req.params.amount))
   })
+
   app.post("/login",async (req,res) => {
     console.log(`USERNAME:${req.body.Username},PASSWORD:${req.body.Password}`)
     console.log("HASH:",crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64"))
@@ -229,7 +185,6 @@ res.send(["48panda", "GalifreyTom", "GamerJ57", "Gollum7412", "kurat_maqas","Aco
     })
     await newPost.save()
     newPost = await Posts.findOne({
-
       contentType: req.body.contentType,
       videoType: req.body.videoType,
       textContent: req.body.textContent,
@@ -243,10 +198,11 @@ res.send(["48panda", "GalifreyTom", "GamerJ57", "Gollum7412", "kurat_maqas","Aco
     )
     
     res.send({validLogin:true})
-  })
-
 })
 
-//Start listening on port
-app.listen(port, () => {})
+})
+   //Start listening on port
+app.listen(port, () => {
+  //console.log(`Server is listening at http://localhost:${port}`)
+})
      
