@@ -57,7 +57,9 @@ db.once('open', async function() {//wait for connection connected
       uri:String,
       qr:String
     },
-    useTwoFactor:Boolean
+    useTwoFactor:Boolean,
+    incomingFriendRequests:[String],
+    outgoingFriendRequests:[String]
   })
   const PostSchema = mongoose.Schema({
     postId:Number,
@@ -80,11 +82,6 @@ db.once('open', async function() {//wait for connection connected
     console.log(`USER ${req.params.username}:`,user)
       res.send(user)})
 
-  //Handle get requests to /friendsToDisplay
-  app.get("/friendsToDisplay",(req, res) => {
-    res.send(["48panda", "GalifreyTom", "GamerJ57", "Gollum7412", "kurat_maqas","Acooldude"])
-  })
-
   //Handle get requests to /post/<PostId>
   app.get("/post/:id",async (req, res) => {
     post = await Posts.findOne({postId:parseInt(req.params.id)})
@@ -104,7 +101,36 @@ db.once('open', async function() {//wait for connection connected
       console.log("POSTS",posts.slice(0, req.params.amount))
       res.send(posts.slice(0, req.params.amount))
   })
-
+  app.post("/sendfriendrequest/:username",async (req,res) => {
+    user = await Users.findOne({username:req.body.username,authHash:req.body.authHash})
+    if(user===undefined||user===null) {
+      res.send({valid:false,err:1})
+    } else{
+      otheruser = await Users.findOne({username:req.params.username})
+    if(otheruser===undefined||otheruser===null) {
+      res.send({valid:false,err:2})
+    } else {
+      if(user.incomingFriendRequests.includes(req.params.username)){
+        res.send({valid:false,err:3})
+      } else {
+        if(user.outgoingFriendRequests.includes(req.params.username)){
+          res.send({valid:false,err:4})
+        } else {
+          if(user.friends.includes(req.params.username)){
+            res.send({valid:false,err:5})
+          } else {
+            //At this point we can make the friend request.
+            user.outgoingFriendRequests.push(req.params.username)
+            otheruser.incomingFriendRequests.push(req.body.username)
+            user.save()
+            otheruser.save()
+            res.send({valid:true})
+          }
+        }
+      }
+    }
+    }
+  })
   app.post("/login",async (req,res) => {
     console.log(`USERNAME:${req.body.Username},PASSWORD:${req.body.Password}`)
     console.log("HASH:",crypto.createHash("sha256").update(req.body.Username+req.body.Password).digest("base64"))

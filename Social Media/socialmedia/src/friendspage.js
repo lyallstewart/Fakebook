@@ -36,7 +36,7 @@ export class FriendsPage extends Component {
     handleSubmit(e) {
         e.preventDefault()
         console.log(this.state.friendToRequest)
-        sendApiData("sendfriendrequest/"+this.state.friendToRequest,this.props.userDetails)
+        sendApiData("sendfriendrequest/"+this.state.friendToRequest,this.props.globals.userDetails)
     }
     render() {
         return (
