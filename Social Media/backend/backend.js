@@ -101,6 +101,42 @@ db.once('open', async function() {//wait for connection connected
       console.log("POSTS",posts.slice(0, req.params.amount))
       res.send(posts.slice(0, req.params.amount))
   })
+  app.post("/removefriend/:username",async (req,res) => {
+    user = await Users.findOne({username:req.body.username,authHash:req.body.authHash})
+    if(user===undefined||user===null) {
+      res.send({valid:false,err:1})
+    } else {
+      await Users.findOneAndUpdate({username:req.body.username,authHash:req.body.authHash},{$pullAll:{incomingFriendRequests:[req.params.username],
+        outgoingFriendRequests:[req.params.username]},$addToSet:{
+        friends:[req.params.username]}})
+    
+    await Users.findOneAndUpdate({username:req.params.username},{$pullAll:{incomingFriendRequests:[req.params.username],
+      outgoingFriendRequests:[req.params.username]},$addToSet:{
+      friends:[req.params.username]}})
+  }}
+  )
+  app.post("/acceptfriendrequest/:username",async (req,res) => {
+    user = await Users.findOne({username:req.body.username,authHash:req.body.authHash})
+    if(user===undefined||user===null) {
+      res.send({valid:false,err:1})
+    } else{
+      otheruser = await Users.findOne({username:req.params.username})
+    if(otheruser===undefined||otheruser===null) {
+      res.send({valid:false,err:2})
+    } else {
+      if(user.incomingFriendRequests.includes(req.params.username)){
+        await Users.findOneAndUpdate({username:req.body.username,authHash:req.body.authHash},{$pullAll:{incomingFriendRequests:[req.params.username],
+          outgoingFriendRequests:[req.params.username],
+          friends:[req.params.username]}})
+          await Users.findOneAndUpdate({username:req.params.username},{$pullAll:{incomingFriendRequests:[req.params.username],
+            outgoingFriendRequests:[req.params.username],
+            friends:[req.params.username]}})
+      } else {
+        res.send({valid:false,err:3})
+      }
+    }
+  }
+  })
   app.post("/sendfriendrequest/:username",async (req,res) => {
     user = await Users.findOne({username:req.body.username,authHash:req.body.authHash})
     if(user===undefined||user===null) {
