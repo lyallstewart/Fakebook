@@ -17,12 +17,18 @@ export class FriendsPage extends Component {
     handleFriendRequestChange(e) {
         this.setState({friendToRequest:e.target.value})
     }
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault()
         console.log(this.state.friendToRequest)
-        sendApiData("sendfriendrequest/"+this.state.friendToRequest,this.props.userDetails)
+        await sendApiData("sendfriendrequest/"+this.state.friendToRequest,this.props.globals.userDetails)
+        let success = await sendApiData("cookielogin",{Username:this.props.globals.userDetails.username,authHash:this.props.globals.userDetails.authHash})
+          if (success.validLogin) {
+            await this.props.callback({userDetails:success.userDetails})
+          }
     }
     render() {
+      console.log("RENDER FRIEND PAGE")
+      console.log(this.props.globals.userDetails)
         return (
             <>
             <h2>Friend Requests:</h2>
@@ -31,11 +37,11 @@ export class FriendsPage extends Component {
                 <input type="submit" value="Send Request" />
             </form>
             <h2 id="Friends">Recieved Friend requests:</h2>
-            <FriendsList friends={this.props.globals.userDetails.incomingFriendRequests} globals={this.props.globals} accept deny/>
+            <FriendsList friends={this.props.globals.userDetails.incomingFriendRequests} globals={this.props.globals} callback={this.props.callback} accept deny/>
             <h2 id="Friends">Sent Friend requests:</h2>
-            <FriendsList friends={this.props.globals.userDetails.outgoingFriendRequests} globals={this.props.globals} deny/>
+            <FriendsList friends={this.props.globals.userDetails.outgoingFriendRequests} globals={this.props.globals} callback={this.props.callback} deny/>
             <h2 id="Friends">Friends:</h2>
-            <FriendsList friends={this.props.globals.userDetails.friends} globals={this.props.globals} deny/>
+            <FriendsList friends={this.props.globals.userDetails.friends} globals={this.props.globals} callback={this.props.callback} deny/>
             </>
     
         )

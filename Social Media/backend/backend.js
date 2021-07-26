@@ -107,12 +107,13 @@ db.once('open', async function() {//wait for connection connected
       res.send({valid:false,err:1})
     } else {
       await Users.findOneAndUpdate({username:req.body.username,authHash:req.body.authHash},{$pullAll:{incomingFriendRequests:[req.params.username],
-        outgoingFriendRequests:[req.params.username]},$addToSet:{
+        outgoingFriendRequests:[req.params.username],
         friends:[req.params.username]}})
     
-    await Users.findOneAndUpdate({username:req.params.username},{$pullAll:{incomingFriendRequests:[req.params.username],
-      outgoingFriendRequests:[req.params.username]},$addToSet:{
-      friends:[req.params.username]}})
+    await Users.findOneAndUpdate({username:req.params.username},{$pullAll:{incomingFriendRequests:[req.body.username],
+      outgoingFriendRequests:[req.body.username],
+      friends:[req.body.username]}})
+      res.send({valid:true})
   }}
   )
   app.post("/acceptfriendrequest/:username",async (req,res) => {
@@ -126,11 +127,12 @@ db.once('open', async function() {//wait for connection connected
     } else {
       if(user.incomingFriendRequests.includes(req.params.username)){
         await Users.findOneAndUpdate({username:req.body.username,authHash:req.body.authHash},{$pullAll:{incomingFriendRequests:[req.params.username],
-          outgoingFriendRequests:[req.params.username],
+          outgoingFriendRequests:[req.params.username]},$addToSet:{
           friends:[req.params.username]}})
-          await Users.findOneAndUpdate({username:req.params.username},{$pullAll:{incomingFriendRequests:[req.params.username],
-            outgoingFriendRequests:[req.params.username],
-            friends:[req.params.username]}})
+          await Users.findOneAndUpdate({username:req.params.username},{$pullAll:{incomingFriendRequests:[req.body.username],
+            outgoingFriendRequests:[req.body.username]},$addToSet:{
+            friends:[req.body.username]}})
+              res.send({valid:true})
       } else {
         res.send({valid:false,err:3})
       }

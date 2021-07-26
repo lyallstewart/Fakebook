@@ -74,3 +74,10 @@
   outline:none;
   border-width: 5px;
 }
+.sureForm {
+  background-color: lightgray;
+  border-radius: 10px;
+}
+.remove {
+  background-color: red;
+}

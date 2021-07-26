@@ -23,16 +23,22 @@ class App extends React.Component {
         this.state={isLoggedIn:false,refresh:0,userDetails:{}}
         this.changeLoginDetails = this.changeLoginDetails.bind(this)
     }
-    changeLoginDetails(toChange) {
-        this.setState(toChange)
+    async changeLoginDetails(toChange) {
+        await this.setState(toChange)
+        await this.setState({refresh:this.state.refresh+1})
+        console.log("test")
         if (toChange.isLoggedIn) {
             if (getCookieConsentValue()) {
                 Cookies.set('username', toChange.userDetails.username, { expires: 7 })
                 Cookies.set("authHash", toChange.userDetails.authHash, { expires: 7 })
             }
         }
+        this.forceUpdate()
       }
     render(){
+        console.log("RENDER APP")
+        console.log(this.state.refresh)
+        console.log(this.state.userDetails)
         if (this.state.isLoggedIn) {//if logged in
             return(
                 <>
@@ -43,7 +49,7 @@ class App extends React.Component {
                     <Route path="/profile"><Profile globals={this.state}/></Route> {/*Provide access to the profile page. */}
                     <Route path="/logout"><Logout globals={this.state}/></Route> {/*Provide access to the profile page. */}
                     <Route path="/post"><CreatePost globals={this.state}/></Route> {/*Provide access to the posts page. */}
-                    <Route path="/friends"><FriendsPage  globals={this.state}/></Route>
+                    <Route path="/friends"><FriendsPage  globals={this.state} callback={this.changeLoginDetails}/></Route>
                 </Switch>
                 </Router>
                 </>
