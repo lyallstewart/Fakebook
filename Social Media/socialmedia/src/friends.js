@@ -22,6 +22,8 @@ class Friend extends Component {
                         <p className="friendName">{this.state.firstName+" "+this.state.surName}</p>
                         <p className="friendUsername">{this.state.username}</p>
                     </div>
+                    {this.props.accept?<button className="acceptFriend">✓</button>:<></>}
+                    {this.props.deny?<button className="denyFriend">X</button>:<></>}
             </div>
         )
     }

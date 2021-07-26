@@ -3,7 +3,9 @@
     margin-bottom: 10px;
     padding-bottom: 10px;
     vertical-align: middle;
-    width:100%
+    width:100%;
+    align-items: center;
+    display:flex;
   }
   
 .friendNameContainer {
@@ -36,4 +38,39 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   max-width: 100%;
+}
+
+.acceptFriend {
+  width:30px;
+  height:30px;
+  vertical-align: middle;
+  margin-left: 10px;
+  border-radius: 7px;
+  font-weight: bolder;
+  color: green;
+  border: 3px green solid;
+}
+.acceptFriend:hover {
+  color: darkgreen;
+  background-color: lightgreen;
+  border: 3px darkgreen solid;
+}
+.denyFriend {
+  width:30px;
+  height:30px;
+  vertical-align: middle;
+  margin-left: 10px;
+  border-radius: 7px;
+  font-weight: bolder;
+  color: red;
+  border: 3px red solid;
+}
+.denyFriend:hover {
+  color: darkred;
+  background-color: lightpink;
+  border: 3px darkred solid;
+}
+.friend-container button:focus{
+  outline:none;
+  border-width: 5px;
 }
