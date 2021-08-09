@@ -3,6 +3,9 @@ We need to encrypt messages and achieve end to end encryption.
 I am going to impliment RSA. Probably not 2048 bits though.
 It would be quite cool to fit the public key onto a QR code, and use that as the way to establish a connection
 */
+
+// If this breaks I have absolutely no idea how this works -Lyall
+
 var forge = require('node-forge');
 //Apparently it is quite hard to find chonky primes, and my testing with small primes confirms this.
 
