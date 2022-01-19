@@ -29,6 +29,16 @@ const port = 3001
 app.use(cors());
 app.use(express.json());
 
+app.use(express.static('./build'));
+app.get('*', (req,res,next) => {
+  console.log("e")
+  if(req.path.startsWith("/api")) {
+    next()
+    return
+  }
+  res.sendFile('./build/index.html')
+})
+
 // Connect to MongoDB via Mongoose
 mongoose.connect(process.env.fakeBookConnectionString, {useNewUrlParser: true, useUnifiedTopology: true});
 // Connection string is kept in an environment variable locally for security
