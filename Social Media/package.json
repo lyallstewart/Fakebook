@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "start": "node ./backend.js",
+    "build": "react-scripts build"
+  }
+}
